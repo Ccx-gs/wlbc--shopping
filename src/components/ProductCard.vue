@@ -44,7 +44,7 @@ function goToDetail() {
     </div>
     <div class="product-info">
       <h3 class="product-name">{{ product.name }}</h3>
-      <p class="product-description">{{ product.description }}</p>
+      <p v-if="product.description" class="product-description">{{ product.description }}</p>
       <p class="product-price">{{ formatPrice(product.price) }}</p>
     </div>
   </article>

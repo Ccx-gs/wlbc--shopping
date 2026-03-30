@@ -5,6 +5,7 @@ import { products } from '../data/products.js'
 
 const searchQuery = ref('')
 const activeCategory = ref('all')
+const customerRating = '4.9/5'
 
 const categories = computed(() => ['all', ...new Set(products.map(product => product.category))])
 
@@ -46,7 +47,7 @@ const filteredProducts = computed(() => {
           <p class="metric-label">Fast dispatch</p>
         </div>
         <div class="metric-item">
-          <p class="metric-value">4.9/5</p>
+          <p class="metric-value">{{ customerRating }}</p>
           <p class="metric-label">Customer rating</p>
         </div>
       </div>
