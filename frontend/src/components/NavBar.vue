@@ -4,7 +4,7 @@ import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { Search, ShoppingCart, Bell } from '@element-plus/icons-vue'
 import { useCart } from '../composables/useCart.js'
 
-const { cartCount } = useCart()
+const { cartCount, fetchCart } = useCart()
 const route = useRoute()
 const router = useRouter()
 const mobileOpen = ref(false)
@@ -58,6 +58,7 @@ function goCategory(category) {
 
 onMounted(() => {
   window.addEventListener('cart:updated', onCartUpdated)
+  fetchCart()
 })
 
 onBeforeUnmount(() => {
@@ -301,7 +302,19 @@ onBeforeUnmount(() => {
 }
 
 .category-nav {
-  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+}
+
+@supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
+  .category-nav {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
 }
 
 .category-inner {

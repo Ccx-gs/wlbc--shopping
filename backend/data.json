@@ -1,0 +1,1577 @@
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro Max",
+    "brand": "Apple",
+    "category": "smartphone",
+    "originalPrice": 9999,
+    "promoPrice": 8999,
+    "price": 8999,
+    "stock": 36,
+    "sales": 3890,
+    "reviewCount": 1228,
+    "rating": 4.9,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "A17 Pro 旗舰芯片，轻巧钛金属机身，夜景与人像表现全面升级。",
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "1-natural-256",
+        "name": "原色钛 256G",
+        "color": "原色钛",
+        "config": "256GB",
+        "price": 8999,
+        "stock": 16
+      },
+      {
+        "id": "1-blue-512",
+        "name": "海蓝钛 512G",
+        "color": "海蓝钛",
+        "config": "512GB",
+        "price": 10299,
+        "stock": 12
+      },
+      {
+        "id": "1-black-1t",
+        "name": "黑色钛 1TB",
+        "color": "黑色钛",
+        "config": "1TB",
+        "price": 11899,
+        "stock": 8
+      }
+    ],
+    "detailHtml": "<section><h3>灵动岛 + ProMotion</h3><p>6.7 英寸超视网膜 XDR，120Hz 自适应刷新，户外高亮更清晰。</p><img src=\"https://images.unsplash.com/photo-1495433324511-bf8e92934d90?auto=format&fit=crop&w=1400&q=80\" alt=\"手机细节\" /><p>支持 USB-C 与空间视频，校园创作和社交分享更轻松。</p></section>",
+    "reviews": [
+      {
+        "user": "数媒-林同学",
+        "score": 5,
+        "content": "拍摄社团活动非常稳，夜景细节比以前好很多。",
+        "date": "2026-03-09"
+      },
+      {
+        "user": "计科-何同学",
+        "score": 4.8,
+        "content": "续航扎实，做项目一整天没压力。",
+        "date": "2026-03-15"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Samsung Galaxy S24 Ultra",
+    "brand": "Samsung",
+    "category": "smartphone",
+    "originalPrice": 9699,
+    "promoPrice": 8799,
+    "price": 8799,
+    "stock": 30,
+    "sales": 2710,
+    "reviewCount": 892,
+    "rating": 4.8,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "2 亿像素旗舰影像，S Pen 手写体验，AI 场景翻译超实用。",
+    "image": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1611078489935-0cb964de46d6?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "2-gray-256",
+        "name": "钛灰 256G",
+        "color": "钛灰",
+        "config": "256GB",
+        "price": 8799,
+        "stock": 12
+      },
+      {
+        "id": "2-violet-512",
+        "name": "深紫 512G",
+        "color": "深紫",
+        "config": "512GB",
+        "price": 9599,
+        "stock": 11
+      },
+      {
+        "id": "2-black-1t",
+        "name": "曜夜黑 1TB",
+        "color": "曜夜黑",
+        "config": "1TB",
+        "price": 10899,
+        "stock": 7
+      }
+    ],
+    "detailHtml": "<section><h3>Galaxy AI 校园效率神器</h3><p>圈选即搜、即问即答，多语种课堂资料快速翻译整理。</p><img src=\"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1400&q=80\" alt=\"三星手机\" /></section>",
+    "reviews": [
+      {
+        "user": "外语-赵同学",
+        "score": 4.9,
+        "content": "课堂翻译和会议记录都很省心。",
+        "date": "2026-02-26"
+      },
+      {
+        "user": "建筑-陈同学",
+        "score": 4.7,
+        "content": "S Pen 画草图非常跟手。",
+        "date": "2026-03-18"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Xiaomi 14 Pro",
+    "brand": "Xiaomi",
+    "category": "smartphone",
+    "originalPrice": 5699,
+    "promoPrice": 4999,
+    "price": 4999,
+    "stock": 48,
+    "sales": 5121,
+    "reviewCount": 1760,
+    "rating": 4.7,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "徕卡联合影像，120W 快充，性能与手感兼得。",
+    "image": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1603539444875-76e7684265f6?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "3-black-256",
+        "name": "曜石黑 256G",
+        "color": "曜石黑",
+        "config": "256GB",
+        "price": 4999,
+        "stock": 20
+      },
+      {
+        "id": "3-white-512",
+        "name": "雪山白 512G",
+        "color": "雪山白",
+        "config": "512GB",
+        "price": 5499,
+        "stock": 18
+      },
+      {
+        "id": "3-green-1t",
+        "name": "森屿绿 1TB",
+        "color": "森屿绿",
+        "config": "1TB",
+        "price": 6199,
+        "stock": 10
+      }
+    ],
+    "detailHtml": "<section><h3>徕卡影调</h3><p>夜景人像色彩自然，校园社团活动一拍即出片。</p><img src=\"https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1400&q=80\" alt=\"小米手机\" /></section>",
+    "reviews": [
+      {
+        "user": "摄影-蒋同学",
+        "score": 4.8,
+        "content": "照片质感不错，色彩很耐看。",
+        "date": "2026-03-01"
+      },
+      {
+        "user": "经管-罗同学",
+        "score": 4.6,
+        "content": "充电真的快，宿舍出门前救急。",
+        "date": "2026-03-20"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Google Pixel 8 Pro",
+    "brand": "Google",
+    "category": "smartphone",
+    "originalPrice": 7999,
+    "promoPrice": 7299,
+    "price": 7299,
+    "stock": 26,
+    "sales": 1340,
+    "reviewCount": 512,
+    "rating": 4.8,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "原生 AI 体验，图像魔术修图，系统更新周期超长。",
+    "image": "https://images.unsplash.com/photo-1601972602237-8c79241e468b?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1601972602237-8c79241e468b?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "4-blue-128",
+        "name": "海湾蓝 128G",
+        "color": "海湾蓝",
+        "config": "128GB",
+        "price": 7299,
+        "stock": 11
+      },
+      {
+        "id": "4-black-256",
+        "name": "曜夜黑 256G",
+        "color": "曜夜黑",
+        "config": "256GB",
+        "price": 7899,
+        "stock": 9
+      },
+      {
+        "id": "4-mint-512",
+        "name": "薄荷绿 512G",
+        "color": "薄荷绿",
+        "config": "512GB",
+        "price": 8799,
+        "stock": 6
+      }
+    ],
+    "detailHtml": "<section><h3>纯净体验</h3><p>AI 通话筛选与图片编辑工具，帮助你高效处理学习与生活信息。</p><img src=\"https://images.unsplash.com/photo-1583573636246-18cb2246697f?auto=format&fit=crop&w=1400&q=80\" alt=\"Pixel 手机\" /></section>",
+    "reviews": [
+      {
+        "user": "计算机-马同学",
+        "score": 4.8,
+        "content": "系统流畅，拍照算法很强。",
+        "date": "2026-02-19"
+      },
+      {
+        "user": "法学-王同学",
+        "score": 4.7,
+        "content": "语音转录在课堂上很实用。",
+        "date": "2026-03-13"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "MacBook Pro 14 M3 Pro",
+    "brand": "Apple",
+    "category": "laptop",
+    "originalPrice": 18999,
+    "promoPrice": 16999,
+    "price": 16999,
+    "stock": 18,
+    "sales": 1689,
+    "reviewCount": 640,
+    "rating": 4.9,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "XDR 屏幕 + M3 Pro，视频剪辑和建模渲染稳定高效。",
+    "image": "https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1527430253228-e93688616381?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "5-silver-18",
+        "name": "银色 18G+512G",
+        "color": "银色",
+        "config": "18GB + 512GB",
+        "price": 16999,
+        "stock": 8
+      },
+      {
+        "id": "5-black-36",
+        "name": "深空黑 36G+1T",
+        "color": "深空黑",
+        "config": "36GB + 1TB",
+        "price": 21999,
+        "stock": 6
+      },
+      {
+        "id": "5-silver-36",
+        "name": "银色 36G+1T",
+        "color": "银色",
+        "config": "36GB + 1TB",
+        "price": 21999,
+        "stock": 4
+      }
+    ],
+    "detailHtml": "<section><h3>Pro 级创作工作站</h3><p>更长续航、更强性能，适合影视后期、设计和开发课程。</p><img src=\"https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1400&q=80\" alt=\"MacBook\" /></section>",
+    "reviews": [
+      {
+        "user": "动画-胡同学",
+        "score": 5,
+        "content": "剪 4K 素材太丝滑了。",
+        "date": "2026-03-06"
+      },
+      {
+        "user": "软工-张同学",
+        "score": 4.9,
+        "content": "续航顶，图书馆一天不用带充电器。",
+        "date": "2026-03-11"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "ThinkPad X1 Carbon Gen 11",
+    "brand": "Lenovo",
+    "category": "laptop",
+    "originalPrice": 12999,
+    "promoPrice": 10999,
+    "price": 10999,
+    "stock": 24,
+    "sales": 2050,
+    "reviewCount": 901,
+    "rating": 4.8,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "轻薄商务本标杆，键盘手感优秀，适合高强度学习办公。",
+    "image": "https://images.unsplash.com/photo-1484788984921-03950022c9ef?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1484788984921-03950022c9ef?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "6-black-16",
+        "name": "经典黑 16G+512G",
+        "color": "经典黑",
+        "config": "16GB + 512GB",
+        "price": 10999,
+        "stock": 10
+      },
+      {
+        "id": "6-black-32",
+        "name": "经典黑 32G+1T",
+        "color": "经典黑",
+        "config": "32GB + 1TB",
+        "price": 12999,
+        "stock": 8
+      },
+      {
+        "id": "6-carbon-32",
+        "name": "碳纤黑 32G+1T",
+        "color": "碳纤黑",
+        "config": "32GB + 1TB",
+        "price": 13399,
+        "stock": 6
+      }
+    ],
+    "detailHtml": "<section><h3>课堂 + 实习双场景</h3><p>稳固耐用，键程舒适，长文档编辑体验出色。</p><img src=\"https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?auto=format&fit=crop&w=1400&q=80\" alt=\"ThinkPad\" /></section>",
+    "reviews": [
+      {
+        "user": "新闻-周同学",
+        "score": 4.8,
+        "content": "码字党福音，键盘真的舒服。",
+        "date": "2026-03-02"
+      },
+      {
+        "user": "财会-郑同学",
+        "score": 4.7,
+        "content": "稳定性很高，几乎没掉过链子。",
+        "date": "2026-03-16"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Dell XPS 15 OLED",
+    "brand": "Dell",
+    "category": "laptop",
+    "originalPrice": 14999,
+    "promoPrice": 13299,
+    "price": 13299,
+    "stock": 15,
+    "sales": 1120,
+    "reviewCount": 438,
+    "rating": 4.7,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "3.5K OLED 高色域屏，设计专业生首选。",
+    "image": "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "7-silver-16",
+        "name": "银色 16G+512G",
+        "color": "银色",
+        "config": "16GB + 512GB",
+        "price": 13299,
+        "stock": 6
+      },
+      {
+        "id": "7-silver-32",
+        "name": "银色 32G+1T",
+        "color": "银色",
+        "config": "32GB + 1TB",
+        "price": 15899,
+        "stock": 5
+      },
+      {
+        "id": "7-black-32",
+        "name": "黑色 32G+1T",
+        "color": "黑色",
+        "config": "32GB + 1TB",
+        "price": 16199,
+        "stock": 4
+      }
+    ],
+    "detailHtml": "<section><h3>高分辨 OLED</h3><p>做平面、剪视频、调色都更精准。</p><img src=\"https://images.unsplash.com/photo-1494173853739-c21f58b16055?auto=format&fit=crop&w=1400&q=80\" alt=\"XPS\" /></section>",
+    "reviews": [
+      {
+        "user": "视觉传达-宋同学",
+        "score": 4.8,
+        "content": "屏幕色彩太漂亮了。",
+        "date": "2026-02-28"
+      },
+      {
+        "user": "编导-谢同学",
+        "score": 4.6,
+        "content": "导出视频速度很快。",
+        "date": "2026-03-22"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "ASUS ROG Zephyrus G14",
+    "brand": "ASUS",
+    "category": "laptop",
+    "originalPrice": 11999,
+    "promoPrice": 9999,
+    "price": 9999,
+    "stock": 22,
+    "sales": 2310,
+    "reviewCount": 772,
+    "rating": 4.8,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "轻薄电竞本，RTX 显卡 + 高刷屏，游戏创作两不误。",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1527443224154-c4d7b4f3fa8b?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "8-white-16",
+        "name": "月耀白 16G+1T",
+        "color": "月耀白",
+        "config": "16GB + 1TB",
+        "price": 9999,
+        "stock": 9
+      },
+      {
+        "id": "8-black-32",
+        "name": "影刃黑 32G+1T",
+        "color": "影刃黑",
+        "config": "32GB + 1TB",
+        "price": 11799,
+        "stock": 7
+      },
+      {
+        "id": "8-white-32",
+        "name": "月耀白 32G+2T",
+        "color": "月耀白",
+        "config": "32GB + 2TB",
+        "price": 12999,
+        "stock": 6
+      }
+    ],
+    "detailHtml": "<section><h3>高刷沉浸体验</h3><p>电竞社训练与课程渲染都能高效应对。</p><img src=\"https://images.unsplash.com/photo-1593640408182-31c228c26b65?auto=format&fit=crop&w=1400&q=80\" alt=\"ROG\" /></section>",
+    "reviews": [
+      {
+        "user": "电竞社-邓同学",
+        "score": 4.9,
+        "content": "帧率很稳，散热也不错。",
+        "date": "2026-03-07"
+      },
+      {
+        "user": "工设-许同学",
+        "score": 4.7,
+        "content": "跑 3D 软件很给力。",
+        "date": "2026-03-17"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "iPad Pro 12.9",
+    "brand": "Apple",
+    "category": "tablet",
+    "originalPrice": 8999,
+    "promoPrice": 7999,
+    "price": 7999,
+    "stock": 33,
+    "sales": 3209,
+    "reviewCount": 1103,
+    "rating": 4.9,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "M 系列芯片加持，手写笔记、绘画剪辑都顺滑。",
+    "image": "https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "9-silver-256",
+        "name": "银色 256G WiFi",
+        "color": "银色",
+        "config": "256GB WiFi",
+        "price": 7999,
+        "stock": 13
+      },
+      {
+        "id": "9-gray-512",
+        "name": "深空灰 512G 蜂窝",
+        "color": "深空灰",
+        "config": "512GB Cellular",
+        "price": 9699,
+        "stock": 11
+      },
+      {
+        "id": "9-silver-1t",
+        "name": "银色 1TB 蜂窝",
+        "color": "银色",
+        "config": "1TB Cellular",
+        "price": 11899,
+        "stock": 9
+      }
+    ],
+    "detailHtml": "<section><h3>移动创作终端</h3><p>上课记笔记、绘图、剪片一机完成。</p><img src=\"https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=1400&q=80\" alt=\"iPad\" /></section>",
+    "reviews": [
+      {
+        "user": "美术-唐同学",
+        "score": 5,
+        "content": "配 Pencil 画画延迟很低。",
+        "date": "2026-03-10"
+      },
+      {
+        "user": "传媒-沈同学",
+        "score": 4.8,
+        "content": "剪短视频比想象中高效。",
+        "date": "2026-03-21"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Xiaomi Pad 6 Pro",
+    "brand": "Xiaomi",
+    "category": "tablet",
+    "originalPrice": 2999,
+    "promoPrice": 2599,
+    "price": 2599,
+    "stock": 62,
+    "sales": 4380,
+    "reviewCount": 1389,
+    "rating": 4.7,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "高刷大屏，学习娱乐两开花，性价比出众。",
+    "image": "https://images.unsplash.com/photo-1589739900243-4b52cd9dd8df?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1589739900243-4b52cd9dd8df?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1527443224154-c4d7b4f3fa8b?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "10-blue-128",
+        "name": "远山蓝 128G",
+        "color": "远山蓝",
+        "config": "128GB",
+        "price": 2599,
+        "stock": 24
+      },
+      {
+        "id": "10-gray-256",
+        "name": "深空灰 256G",
+        "color": "深空灰",
+        "config": "256GB",
+        "price": 2899,
+        "stock": 22
+      },
+      {
+        "id": "10-gold-256",
+        "name": "流金色 256G",
+        "color": "流金色",
+        "config": "256GB",
+        "price": 2999,
+        "stock": 16
+      }
+    ],
+    "detailHtml": "<section><h3>轻办公组合</h3><p>搭配键盘与手写笔，课程记要和文档处理更高效。</p><img src=\"https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?auto=format&fit=crop&w=1400&q=80\" alt=\"平板\" /></section>",
+    "reviews": [
+      {
+        "user": "统计-彭同学",
+        "score": 4.7,
+        "content": "课件阅读体验很棒。",
+        "date": "2026-03-08"
+      },
+      {
+        "user": "化学-丁同学",
+        "score": 4.6,
+        "content": "电池很耐用，刷网课够用。",
+        "date": "2026-03-26"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Huawei MatePad Pro 13.2",
+    "brand": "Huawei",
+    "category": "tablet",
+    "originalPrice": 5499,
+    "promoPrice": 4899,
+    "price": 4899,
+    "stock": 28,
+    "sales": 1423,
+    "reviewCount": 565,
+    "rating": 4.8,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "柔性 OLED 屏幕，轻薄机身，鸿蒙多设备协同高效。",
+    "image": "https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1612196808214-b8e1d6145a03?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "11-black-256",
+        "name": "曜石黑 256G",
+        "color": "曜石黑",
+        "config": "256GB",
+        "price": 4899,
+        "stock": 10
+      },
+      {
+        "id": "11-white-512",
+        "name": "羽纱白 512G",
+        "color": "羽纱白",
+        "config": "512GB",
+        "price": 5599,
+        "stock": 9
+      },
+      {
+        "id": "11-green-512",
+        "name": "松霜绿 512G",
+        "color": "松霜绿",
+        "config": "512GB",
+        "price": 5599,
+        "stock": 9
+      }
+    ],
+    "detailHtml": "<section><h3>多屏协同</h3><p>笔记本、手机、平板互联，资料共享一步到位。</p><img src=\"https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=1400&q=80\" alt=\"MatePad\" /></section>",
+    "reviews": [
+      {
+        "user": "教育学-韩同学",
+        "score": 4.9,
+        "content": "会议纪要和手写批注非常顺手。",
+        "date": "2026-03-04"
+      },
+      {
+        "user": "历史-吕同学",
+        "score": 4.7,
+        "content": "看文献和做批注很方便。",
+        "date": "2026-03-23"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Sony WH-1000XM5",
+    "brand": "Sony",
+    "category": "audio",
+    "originalPrice": 2899,
+    "promoPrice": 2399,
+    "price": 2399,
+    "stock": 80,
+    "sales": 6120,
+    "reviewCount": 2109,
+    "rating": 4.9,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "旗舰降噪头戴，图书馆与通勤都能沉浸学习。",
+    "image": "https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "12-black",
+        "name": "曜石黑",
+        "color": "黑色",
+        "config": "标准版",
+        "price": 2399,
+        "stock": 30
+      },
+      {
+        "id": "12-silver",
+        "name": "铂光银",
+        "color": "银色",
+        "config": "标准版",
+        "price": 2399,
+        "stock": 28
+      },
+      {
+        "id": "12-blue",
+        "name": "深海蓝",
+        "color": "蓝色",
+        "config": "标准版",
+        "price": 2499,
+        "stock": 22
+      }
+    ],
+    "detailHtml": "<section><h3>自适应降噪</h3><p>在宿舍、地铁、图书馆自动匹配最佳降噪等级。</p><img src=\"https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=1400&q=80\" alt=\"耳机\" /></section>",
+    "reviews": [
+      {
+        "user": "音乐学-高同学",
+        "score": 5,
+        "content": "低频和人声都很有层次。",
+        "date": "2026-03-12"
+      },
+      {
+        "user": "医学-龚同学",
+        "score": 4.8,
+        "content": "图书馆复习时很安静。",
+        "date": "2026-03-24"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "AirPods Pro 2",
+    "brand": "Apple",
+    "category": "audio",
+    "originalPrice": 1999,
+    "promoPrice": 1699,
+    "price": 1699,
+    "stock": 96,
+    "sales": 7290,
+    "reviewCount": 2480,
+    "rating": 4.8,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "主动降噪 + 自适应通透，Apple 生态无缝连接。",
+    "image": "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1588423771073-b8903fbb85b5?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1611078489935-0cb964de46d6?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "13-white",
+        "name": "白色标准款",
+        "color": "白色",
+        "config": "Type-C 充电盒",
+        "price": 1699,
+        "stock": 42
+      },
+      {
+        "id": "13-engrave",
+        "name": "镌刻定制款",
+        "color": "白色",
+        "config": "个性镌刻",
+        "price": 1779,
+        "stock": 28
+      },
+      {
+        "id": "13-care",
+        "name": "含 AppleCare+",
+        "color": "白色",
+        "config": "延保版",
+        "price": 1999,
+        "stock": 26
+      }
+    ],
+    "detailHtml": "<section><h3>空间音频体验</h3><p>追剧、听课、通话都更沉浸。</p><img src=\"https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1400&q=80\" alt=\"AirPods\" /></section>",
+    "reviews": [
+      {
+        "user": "英语-潘同学",
+        "score": 4.8,
+        "content": "听力练习很清晰。",
+        "date": "2026-03-05"
+      },
+      {
+        "user": "法学-乔同学",
+        "score": 4.7,
+        "content": "连接稳定，切设备方便。",
+        "date": "2026-03-18"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Bose QuietComfort Ultra",
+    "brand": "Bose",
+    "category": "audio",
+    "originalPrice": 3299,
+    "promoPrice": 2899,
+    "price": 2899,
+    "stock": 37,
+    "sales": 1450,
+    "reviewCount": 508,
+    "rating": 4.8,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "沉浸式音频与舒适佩戴，长时间学习更轻松。",
+    "image": "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1558089687-f282ffcbc126?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "14-black",
+        "name": "黑色",
+        "color": "黑色",
+        "config": "标准版",
+        "price": 2899,
+        "stock": 15
+      },
+      {
+        "id": "14-white",
+        "name": "白色烟云",
+        "color": "白色",
+        "config": "标准版",
+        "price": 2899,
+        "stock": 12
+      },
+      {
+        "id": "14-green",
+        "name": "深海绿",
+        "color": "绿色",
+        "config": "限量版",
+        "price": 2999,
+        "stock": 10
+      }
+    ],
+    "detailHtml": "<section><h3>长时舒适佩戴</h3><p>耳罩柔软透气，适合长时间在线课程。</p><img src=\"https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1400&q=80\" alt=\"Bose\" /></section>",
+    "reviews": [
+      {
+        "user": "心理-陶同学",
+        "score": 4.9,
+        "content": "戴久也不夹头，体验很棒。",
+        "date": "2026-03-01"
+      },
+      {
+        "user": "化工-冯同学",
+        "score": 4.7,
+        "content": "降噪很稳，实验室也能专注。",
+        "date": "2026-03-25"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Apple Watch Series 9",
+    "brand": "Apple",
+    "category": "wearable",
+    "originalPrice": 3299,
+    "promoPrice": 2899,
+    "price": 2899,
+    "stock": 58,
+    "sales": 3018,
+    "reviewCount": 990,
+    "rating": 4.8,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "健康监测与运动记录全面，校园健身搭子。",
+    "image": "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "15-midnight-41",
+        "name": "午夜色 41mm",
+        "color": "午夜色",
+        "config": "GPS",
+        "price": 2899,
+        "stock": 20
+      },
+      {
+        "id": "15-starlight-45",
+        "name": "星光色 45mm",
+        "color": "星光色",
+        "config": "GPS",
+        "price": 3099,
+        "stock": 19
+      },
+      {
+        "id": "15-silver-45c",
+        "name": "银色 45mm 蜂窝",
+        "color": "银色",
+        "config": "GPS + Cellular",
+        "price": 3899,
+        "stock": 19
+      }
+    ],
+    "detailHtml": "<section><h3>健康数据实时掌握</h3><p>运动、心率、睡眠追踪，帮助你保持节奏。</p><img src=\"https://images.unsplash.com/photo-1579586337278-3f436f25d4d6?auto=format&fit=crop&w=1400&q=80\" alt=\"Apple Watch\" /></section>",
+    "reviews": [
+      {
+        "user": "体育-邹同学",
+        "score": 4.9,
+        "content": "跑步监测数据准确。",
+        "date": "2026-03-03"
+      },
+      {
+        "user": "护理-贺同学",
+        "score": 4.7,
+        "content": "提醒功能很贴心。",
+        "date": "2026-03-27"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Huawei Watch GT 4",
+    "brand": "Huawei",
+    "category": "wearable",
+    "originalPrice": 1688,
+    "promoPrice": 1399,
+    "price": 1399,
+    "stock": 70,
+    "sales": 4112,
+    "reviewCount": 1290,
+    "rating": 4.7,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "超长续航智能手表，运动健康场景覆盖全面。",
+    "image": "https://images.unsplash.com/photo-1544117519-31a4b719223d?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1544117519-31a4b719223d?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1487215078519-e21cc028cb29?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "16-black-46",
+        "name": "曜石黑 46mm",
+        "color": "曜石黑",
+        "config": "硅胶表带",
+        "price": 1399,
+        "stock": 26
+      },
+      {
+        "id": "16-brown-46",
+        "name": "咖色 46mm",
+        "color": "棕色",
+        "config": "皮质表带",
+        "price": 1599,
+        "stock": 22
+      },
+      {
+        "id": "16-silver-41",
+        "name": "银色 41mm",
+        "color": "银色",
+        "config": "米兰尼斯带",
+        "price": 1699,
+        "stock": 22
+      }
+    ],
+    "detailHtml": "<section><h3>14 天续航</h3><p>减少频繁充电烦恼，运动打卡更连续。</p><img src=\"https://images.unsplash.com/photo-1579586337278-3f436f25d4d6?auto=format&fit=crop&w=1400&q=80\" alt=\"Huawei Watch\" /></section>",
+    "reviews": [
+      {
+        "user": "地理-蔡同学",
+        "score": 4.7,
+        "content": "续航是真的顶。",
+        "date": "2026-03-14"
+      },
+      {
+        "user": "金融-尤同学",
+        "score": 4.6,
+        "content": "日常通知和运动都好用。",
+        "date": "2026-03-29"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "DJI Osmo Pocket 3",
+    "brand": "DJI",
+    "category": "accessory",
+    "originalPrice": 3699,
+    "promoPrice": 3299,
+    "price": 3299,
+    "stock": 21,
+    "sales": 1189,
+    "reviewCount": 402,
+    "rating": 4.9,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "1 英寸口袋云台相机，Vlog 和校园纪录片神器。",
+    "image": "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "17-basic",
+        "name": "标准套装",
+        "color": "黑色",
+        "config": "机身 + 充电线",
+        "price": 3299,
+        "stock": 9
+      },
+      {
+        "id": "17-combo",
+        "name": "创作套装",
+        "color": "黑色",
+        "config": "含麦克风+手柄",
+        "price": 4199,
+        "stock": 6
+      },
+      {
+        "id": "17-case",
+        "name": "旅行套装",
+        "color": "黑色",
+        "config": "含便携包",
+        "price": 3599,
+        "stock": 6
+      }
+    ],
+    "detailHtml": "<section><h3>云台防抖更稳</h3><p>校园采访、活动记录、短视频拍摄都轻松上手。</p><img src=\"https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?auto=format&fit=crop&w=1400&q=80\" alt=\"DJI\" /></section>",
+    "reviews": [
+      {
+        "user": "广播电视-孟同学",
+        "score": 5,
+        "content": "一人拍摄效率极高。",
+        "date": "2026-03-19"
+      },
+      {
+        "user": "旅游管理-曹同学",
+        "score": 4.8,
+        "content": "旅行记录画面很稳。",
+        "date": "2026-03-28"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Logitech MX Master 3S",
+    "brand": "Logitech",
+    "category": "accessory",
+    "originalPrice": 899,
+    "promoPrice": 699,
+    "price": 699,
+    "stock": 120,
+    "sales": 8321,
+    "reviewCount": 2860,
+    "rating": 4.9,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "高精度静音办公鼠标，跨屏协作效率提升明显。",
+    "image": "https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "18-black",
+        "name": "石墨黑",
+        "color": "黑色",
+        "config": "标准版",
+        "price": 699,
+        "stock": 48
+      },
+      {
+        "id": "18-white",
+        "name": "月光白",
+        "color": "白色",
+        "config": "标准版",
+        "price": 729,
+        "stock": 40
+      },
+      {
+        "id": "18-blue",
+        "name": "冰川蓝",
+        "color": "蓝色",
+        "config": "Mac 版",
+        "price": 799,
+        "stock": 32
+      }
+    ],
+    "detailHtml": "<section><h3>静音 + 疾速滚轮</h3><p>图书馆学习、宿舍夜间使用都不扰人。</p><img src=\"https://images.unsplash.com/photo-1613141412501-9012977f1969?auto=format&fit=crop&w=1400&q=80\" alt=\"鼠标\" /></section>",
+    "reviews": [
+      {
+        "user": "软件-田同学",
+        "score": 5,
+        "content": "滚轮体验太爽了。",
+        "date": "2026-03-13"
+      },
+      {
+        "user": "管理-苏同学",
+        "score": 4.8,
+        "content": "跨设备切换非常快。",
+        "date": "2026-03-30"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Keychron K8 Pro",
+    "brand": "Keychron",
+    "category": "accessory",
+    "originalPrice": 799,
+    "promoPrice": 629,
+    "price": 629,
+    "stock": 95,
+    "sales": 5012,
+    "reviewCount": 1668,
+    "rating": 4.8,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "三模机械键盘，支持热插拔，编码与写作手感优秀。",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1541140532154-b024d705b90a?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "19-red",
+        "name": "红轴 RGB",
+        "color": "黑灰",
+        "config": "红轴",
+        "price": 629,
+        "stock": 34
+      },
+      {
+        "id": "19-brown",
+        "name": "茶轴 RGB",
+        "color": "黑灰",
+        "config": "茶轴",
+        "price": 659,
+        "stock": 31
+      },
+      {
+        "id": "19-blue",
+        "name": "青轴 RGB",
+        "color": "黑灰",
+        "config": "青轴",
+        "price": 659,
+        "stock": 30
+      }
+    ],
+    "detailHtml": "<section><h3>可玩性极高</h3><p>支持 QMK/VIA，自定义按键映射更灵活。</p><img src=\"https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=1400&q=80\" alt=\"机械键盘\" /></section>",
+    "reviews": [
+      {
+        "user": "计算机-康同学",
+        "score": 4.9,
+        "content": "敲代码很带感。",
+        "date": "2026-03-02"
+      },
+      {
+        "user": "中文-陆同学",
+        "score": 4.7,
+        "content": "打字很舒服，回弹好。",
+        "date": "2026-03-20"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Nintendo Switch OLED",
+    "brand": "Nintendo",
+    "category": "gaming",
+    "originalPrice": 2599,
+    "promoPrice": 2199,
+    "price": 2199,
+    "stock": 44,
+    "sales": 3348,
+    "reviewCount": 1186,
+    "rating": 4.8,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "OLED 大屏掌机，宿舍聚会和碎片娱乐首选。",
+    "image": "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1600086827875-a63b01f1335c?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "20-white",
+        "name": "白色 Joy-Con",
+        "color": "白色",
+        "config": "OLED 版",
+        "price": 2199,
+        "stock": 16
+      },
+      {
+        "id": "20-neon",
+        "name": "霓虹红蓝",
+        "color": "红蓝",
+        "config": "OLED 版",
+        "price": 2199,
+        "stock": 14
+      },
+      {
+        "id": "20-bundle",
+        "name": "游戏捆绑版",
+        "color": "限定色",
+        "config": "含热门游戏",
+        "price": 2599,
+        "stock": 14
+      }
+    ],
+    "detailHtml": "<section><h3>随时随地开黑</h3><p>掌机与电视双模式，和室友联机更欢乐。</p><img src=\"https://images.unsplash.com/photo-1593118247619-e2d6f056869e?auto=format&fit=crop&w=1400&q=80\" alt=\"Switch\" /></section>",
+    "reviews": [
+      {
+        "user": "土木-袁同学",
+        "score": 4.8,
+        "content": "宿舍团建神器。",
+        "date": "2026-03-09"
+      },
+      {
+        "user": "数理-季同学",
+        "score": 4.7,
+        "content": "屏幕效果很好。",
+        "date": "2026-03-27"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Sony PlayStation 5 Slim",
+    "brand": "Sony",
+    "category": "gaming",
+    "originalPrice": 4299,
+    "promoPrice": 3899,
+    "price": 3899,
+    "stock": 29,
+    "sales": 1690,
+    "reviewCount": 640,
+    "rating": 4.9,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "次世代主机性能与手柄震动反馈，沉浸体验拉满。",
+    "image": "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1622297845775-5ff3fef71d13?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1580327332925-a10e6cb11baa?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "21-digital",
+        "name": "数字版",
+        "color": "白色",
+        "config": "无光驱",
+        "price": 3899,
+        "stock": 11
+      },
+      {
+        "id": "21-disc",
+        "name": "光驱版",
+        "color": "白色",
+        "config": "含光驱",
+        "price": 4399,
+        "stock": 10
+      },
+      {
+        "id": "21-bundle",
+        "name": "双手柄套装",
+        "color": "白色",
+        "config": "含第二手柄",
+        "price": 4799,
+        "stock": 8
+      }
+    ],
+    "detailHtml": "<section><h3>真实触感回馈</h3><p>DualSense 自适应扳机与 3D 音效，沉浸感十足。</p><img src=\"https://images.unsplash.com/photo-1616578273576-8e38a6f6f037?auto=format&fit=crop&w=1400&q=80\" alt=\"PS5\" /></section>",
+    "reviews": [
+      {
+        "user": "自动化-黎同学",
+        "score": 5,
+        "content": "画质和手柄体验太顶了。",
+        "date": "2026-03-06"
+      },
+      {
+        "user": "法律-程同学",
+        "score": 4.8,
+        "content": "宿舍娱乐天花板。",
+        "date": "2026-03-26"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Canon EOS R50",
+    "brand": "Canon",
+    "category": "camera",
+    "originalPrice": 5899,
+    "promoPrice": 5299,
+    "price": 5299,
+    "stock": 25,
+    "sales": 980,
+    "reviewCount": 368,
+    "rating": 4.8,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "轻量微单，色彩讨喜，适合入门摄影与视频创作。",
+    "image": "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "22-18-45",
+        "name": "18-45 套机",
+        "color": "黑色",
+        "config": "入门镜头",
+        "price": 5299,
+        "stock": 9
+      },
+      {
+        "id": "22-18-150",
+        "name": "18-150 套机",
+        "color": "黑色",
+        "config": "旅游镜头",
+        "price": 6699,
+        "stock": 8
+      },
+      {
+        "id": "22-body",
+        "name": "单机身",
+        "color": "白色",
+        "config": "机身版",
+        "price": 4999,
+        "stock": 8
+      }
+    ],
+    "detailHtml": "<section><h3>Vlog 友好型相机</h3><p>自动对焦快，肤色表现自然，适合校园内容创作。</p><img src=\"https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?auto=format&fit=crop&w=1400&q=80\" alt=\"Canon\" /></section>",
+    "reviews": [
+      {
+        "user": "新媒体-雷同学",
+        "score": 4.9,
+        "content": "上手快，直出色彩好看。",
+        "date": "2026-03-08"
+      },
+      {
+        "user": "广告-卫同学",
+        "score": 4.7,
+        "content": "拍活动视频对焦稳定。",
+        "date": "2026-03-29"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "name": "OnePlus 12",
+    "brand": "OnePlus",
+    "category": "smartphone",
+    "originalPrice": 4699,
+    "promoPrice": 4299,
+    "price": 4299,
+    "stock": 40,
+    "sales": 2876,
+    "reviewCount": 938,
+    "rating": 4.8,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "第二代骁龙8移动平台，2K东方屏，100W超级闪充。",
+    "image": "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1610945264803-c22b62d2a7b3?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "23-black-256",
+        "name": "岩黑 256G",
+        "color": "黑色",
+        "config": "256GB",
+        "price": 4299,
+        "stock": 16
+      },
+      {
+        "id": "23-green-512",
+        "name": "留白绿 512G",
+        "color": "绿色",
+        "config": "512GB",
+        "price": 4799,
+        "stock": 14
+      },
+      {
+        "id": "23-white-1t",
+        "name": "苍穹白 1TB",
+        "color": "白色",
+        "config": "1TB",
+        "price": 5499,
+        "stock": 10
+      }
+    ],
+    "detailHtml": "<section><h3>性能与质感兼具</h3><p>旗舰性能与高亮屏幕，课程、游戏、创作均可轻松胜任。</p><img src=\"https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1400&q=80\" alt=\"OnePlus 手机\" /></section>",
+    "reviews": [
+      {
+        "user": "电子-俞同学",
+        "score": 4.9,
+        "content": "高刷屏幕顺滑，续航也很稳。",
+        "date": "2026-03-18"
+      },
+      {
+        "user": "软件-苗同学",
+        "score": 4.7,
+        "content": "日常多开应用没压力。",
+        "date": "2026-03-27"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Razer BlackShark V2 Pro",
+    "brand": "Razer",
+    "category": "gaming",
+    "originalPrice": 1499,
+    "promoPrice": 1299,
+    "price": 1299,
+    "stock": 52,
+    "sales": 1960,
+    "reviewCount": 642,
+    "rating": 4.7,
+    "isNew": false,
+    "freeShipping": true,
+    "description": "电竞级无线耳机，低延迟连接，语音沟通清晰稳定。",
+    "image": "https://images.unsplash.com/photo-1599669454699-248893623440?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1599669454699-248893623440?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "24-black",
+        "name": "经典黑",
+        "color": "黑色",
+        "config": "无线版",
+        "price": 1299,
+        "stock": 20
+      },
+      {
+        "id": "24-white",
+        "name": "极地白",
+        "color": "白色",
+        "config": "无线版",
+        "price": 1349,
+        "stock": 18
+      },
+      {
+        "id": "24-bundle",
+        "name": "赛事套装",
+        "color": "黑色",
+        "config": "含备用耳罩",
+        "price": 1499,
+        "stock": 14
+      }
+    ],
+    "detailHtml": "<section><h3>清晰定位与通话</h3><p>多人开黑时人声突出，脚步和环境音辨识更清楚。</p><img src=\"https://images.unsplash.com/photo-1593784991095-a205069533cd?auto=format&fit=crop&w=1400&q=80\" alt=\"Razer 耳机\" /></section>",
+    "reviews": [
+      {
+        "user": "电竞社-傅同学",
+        "score": 4.8,
+        "content": "打 FPS 定位非常清楚。",
+        "date": "2026-03-15"
+      },
+      {
+        "user": "信安-葛同学",
+        "score": 4.6,
+        "content": "麦克风效果不错，队友反馈很好。",
+        "date": "2026-03-25"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "name": "HP Omen 16",
+    "brand": "HP",
+    "category": "laptop",
+    "originalPrice": 10999,
+    "promoPrice": 9499,
+    "price": 9499,
+    "stock": 27,
+    "sales": 1542,
+    "reviewCount": 533,
+    "rating": 4.7,
+    "isNew": true,
+    "freeShipping": true,
+    "description": "16 英寸高刷电竞本，RTX 独显加持，学习和娱乐兼顾。",
+    "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1200&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1400&q=80"
+    ],
+    "skus": [
+      {
+        "id": "25-i7-16",
+        "name": "i7 + 16G + 1T",
+        "color": "黑色",
+        "config": "RTX 4060",
+        "price": 9499,
+        "stock": 10
+      },
+      {
+        "id": "25-i9-32",
+        "name": "i9 + 32G + 1T",
+        "color": "黑色",
+        "config": "RTX 4070",
+        "price": 11299,
+        "stock": 9
+      },
+      {
+        "id": "25-i9-32-2t",
+        "name": "i9 + 32G + 2T",
+        "color": "黑色",
+        "config": "RTX 4070",
+        "price": 11999,
+        "stock": 8
+      }
+    ],
+    "detailHtml": "<section><h3>高性能散热架构</h3><p>高负载渲染和 3A 游戏都能保持稳定输出。</p><img src=\"https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80\" alt=\"Omen 笔记本\" /></section>",
+    "reviews": [
+      {
+        "user": "机械-段同学",
+        "score": 4.8,
+        "content": "建模渲染速度很快。",
+        "date": "2026-03-16"
+      },
+      {
+        "user": "游戏设计-阎同学",
+        "score": 4.6,
+        "content": "散热比预期更稳定。",
+        "date": "2026-03-28"
+      }
+    ]
+  }
+]

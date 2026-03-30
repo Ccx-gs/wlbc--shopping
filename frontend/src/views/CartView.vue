@@ -5,7 +5,7 @@ import CartItem from '../components/CartItem.vue'
 import { useCart } from '../composables/useCart.js'
 
 const router = useRouter()
-const { cartItems, cartTotal, cartCount } = useCart()
+const { cartItems, cartTotal, cartCount, fetchCart } = useCart()
 
 function formatPriceParts(price) {
   const [integer, decimals] = Number(price || 0).toFixed(2).split('.')
@@ -13,6 +13,7 @@ function formatPriceParts(price) {
 }
 
 onMounted(() => {
+  fetchCart()
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) entry.target.classList.add('in-view')

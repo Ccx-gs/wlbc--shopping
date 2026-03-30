@@ -2,9 +2,10 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
-import { products } from '../data/products.js'
+import http from '../api/http.js'
 
 const router = useRouter()
+const products = ref([])
 const currentSlide = ref(0)
 const searchQuery = ref('')
 const now = ref(Date.now())
@@ -53,7 +54,7 @@ const countdown = computed(() => {
 
 const recommendationProducts = computed(() => {
   const q = searchQuery.value.trim().toLowerCase()
-  const filtered = products.filter(item => !q || item.name.toLowerCase().includes(q) || item.brand.toLowerCase().includes(q))
+  const filtered = products.value.filter(item => !q || item.name.toLowerCase().includes(q) || item.brand.toLowerCase().includes(q))
   return filtered.slice().sort((a, b) => b.sales - a.sales).slice(0, 12)
 })
 
@@ -86,6 +87,9 @@ onMounted(() => {
   timer = setInterval(nextSlide, 3600)
   countdownTimer = setInterval(() => { now.value = Date.now() }, 1000)
   revealOnScroll()
+  http.get('/products').then(({ data }) => {
+    products.value = Array.isArray(data) ? data : []
+  })
 })
 
 onBeforeUnmount(() => {
@@ -155,14 +159,17 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  overflow-x: hidden;
 }
 
 .banner {
   position: relative;
   min-height: 340px;
-  border-radius: 12px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  border-radius: 0;
   overflow: hidden;
-  box-shadow: var(--shadow-elevated);
+  box-shadow: none;
 }
 
 .banner-bg {

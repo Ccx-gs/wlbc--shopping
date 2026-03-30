@@ -2,9 +2,10 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
-import { products } from '../data/products.js'
+import http from '../api/http.js'
 
 const route = useRoute()
+const products = ref([])
 const loading = ref(true)
 const selectedBrand = ref('all')
 const selectedRange = ref('all')
@@ -12,7 +13,7 @@ const selectedCategory = ref(route.query.category || 'all')
 const keyword = ref(String(route.query.keyword || '').trim().toLowerCase())
 const sortBy = ref('default')
 
-const brands = computed(() => ['all', ...new Set(products.map(item => item.brand))])
+const brands = computed(() => ['all', ...new Set(products.value.map(item => item.brand))])
 
 const ranges = [
   { key: 'all', label: '全部价格' },
@@ -22,10 +23,10 @@ const ranges = [
   { key: '12000+', label: '¥12000+' },
 ]
 
-const categories = computed(() => ['all', ...new Set(products.map(item => item.category))])
+const categories = computed(() => ['all', ...new Set(products.value.map(item => item.category))])
 
 const filteredProducts = computed(() => {
-  const result = products.filter((item) => {
+  const result = products.value.filter((item) => {
     const brandOk = selectedBrand.value === 'all' || item.brand === selectedBrand.value
     const categoryOk = selectedCategory.value === 'all' || item.category === selectedCategory.value
     const keywordOk = !keyword.value
@@ -67,15 +68,19 @@ watch(() => route.query.keyword, (value) => {
 })
 
 onMounted(() => {
-  setTimeout(() => {
-    loading.value = false
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('in-view')
-      })
-    }, { threshold: 0.1 })
-    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el))
-  }, 700)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view')
+    })
+  }, { threshold: 0.1 })
+  document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el))
+
+  http.get('/products').then(({ data }) => {
+    products.value = Array.isArray(data) ? data : []
+    setTimeout(() => {
+      loading.value = false
+    }, 700)
+  })
 })
 </script>
 
