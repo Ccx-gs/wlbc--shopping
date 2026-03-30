@@ -1,12 +1,29 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { Search, ShoppingCart, Bell } from '@element-plus/icons-vue'
 import { useCart } from '../composables/useCart.js'
 
 const { cartCount } = useCart()
 const route = useRoute()
+const router = useRouter()
 const mobileOpen = ref(false)
 const shake = ref(false)
+const searchKeyword = ref(String(route.query.keyword || '').trim())
+const notificationCount = ref(0)
+
+const hotKeywords = ['iPhone', 'MacBook', '降噪耳机', '游戏本']
+const categories = [
+  { key: 'all', label: '全部分类' },
+  { key: 'smartphone', label: '手机' },
+  { key: 'laptop', label: '电脑' },
+  { key: 'tablet', label: '平板' },
+  { key: 'audio', label: '耳机音频' },
+  { key: 'wearable', label: '智能穿戴' },
+  { key: 'gaming', label: '游戏设备' },
+]
+
+const activeCategory = computed(() => route.query.category || 'all')
 
 function toggleMobile() {
   mobileOpen.value = !mobileOpen.value
@@ -23,6 +40,22 @@ function onCartUpdated() {
   }, 520)
 }
 
+function performSearch(keyword = searchKeyword.value) {
+  const query = String(keyword || '').trim()
+  router.push(query ? `/list?keyword=${encodeURIComponent(query)}` : '/list')
+  closeMobile()
+}
+
+function goKeyword(keyword) {
+  searchKeyword.value = keyword
+  performSearch(keyword)
+}
+
+function goCategory(category) {
+  router.push(category === 'all' ? '/list' : `/list?category=${category}`)
+  closeMobile()
+}
+
 onMounted(() => {
   window.addEventListener('cart:updated', onCartUpdated)
 })
@@ -33,49 +66,134 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="navbar">
-    <div class="container navbar-inner">
-      <RouterLink to="/" class="brand" @click="closeMobile">
-        <span class="brand-mark">WL</span>
-        <div>
-          <p class="brand-name">Campus Digital Mall</p>
-          <p class="brand-sub">现代轻奢 · 青春活力</p>
+  <header class="mall-header">
+    <div class="top-bar">
+      <div class="container top-inner">
+        <p>你好，请登录</p>
+        <div class="top-links">
+          <RouterLink to="/checkout">我的订单</RouterLink>
+          <a href="#">帮助中心</a>
         </div>
-      </RouterLink>
-
-      <button class="hamburger" aria-label="菜单" @click="toggleMobile">
-        <span></span><span></span><span></span>
-      </button>
-
-      <nav class="nav-links" :class="{ open: mobileOpen }">
-        <RouterLink to="/" :class="['nav-link', { active: route.path === '/' }]" @click="closeMobile">首页</RouterLink>
-        <RouterLink to="/list" :class="['nav-link', { active: route.path === '/list' }]" @click="closeMobile">分类</RouterLink>
-        <RouterLink to="/checkout" :class="['nav-link', { active: route.path === '/checkout' }]" @click="closeMobile">订单</RouterLink>
-        <RouterLink to="/cart" :class="['nav-link', 'cart-link', { active: route.path === '/cart', shake }]" @click="closeMobile">
-          购物车
-          <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
-        </RouterLink>
-      </nav>
+      </div>
     </div>
+
+    <div class="main-head">
+      <div class="container main-inner">
+        <RouterLink to="/" class="brand" @click="closeMobile">
+          <span class="brand-mark">WL</span>
+          <div>
+            <p class="brand-name">WLBC Mall</p>
+            <p class="brand-sub">旗舰级数码购物平台</p>
+          </div>
+        </RouterLink>
+
+        <div class="search-panel">
+          <el-input
+            v-model="searchKeyword"
+            class="global-search"
+            size="large"
+            placeholder="搜索商品、品牌或型号"
+            @keyup.enter="performSearch()"
+          >
+            <template #prefix>
+              <el-icon><Search /></el-icon>
+            </template>
+            <template #append>
+              <el-button type="primary" @click="performSearch()">搜索</el-button>
+            </template>
+          </el-input>
+          <div class="hot-keywords">
+            <span>热门搜索：</span>
+            <button
+              v-for="word in hotKeywords"
+              :key="word"
+              class="hot-word"
+              @click="goKeyword(word)"
+            >
+              {{ word }}
+            </button>
+          </div>
+        </div>
+
+        <div class="head-actions">
+          <RouterLink
+            to="/cart"
+            :class="['action-btn', 'cart-link', { active: route.path === '/cart', shake }]"
+            @click="closeMobile"
+          >
+            <el-badge :value="cartCount" :hidden="cartCount === 0" :offset="[4, 4]">
+              <el-icon><ShoppingCart /></el-icon>
+            </el-badge>
+            <span>购物车</span>
+          </RouterLink>
+          <button class="action-btn">
+            <el-badge :value="notificationCount" :hidden="notificationCount === 0" :offset="[4, 4]">
+              <el-icon><Bell /></el-icon>
+            </el-badge>
+            <span>消息</span>
+          </button>
+        </div>
+
+        <button class="hamburger" aria-label="菜单" @click="toggleMobile">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="category-nav" :class="{ open: mobileOpen }">
+      <div class="container category-inner">
+        <button
+          v-for="item in categories"
+          :key="item.key"
+          :class="['category-link', { active: activeCategory === item.key }]"
+          @click="goCategory(item.key)"
+        >
+          {{ item.label }}
+        </button>
+      </div>
+    </nav>
   </header>
 </template>
 
 <style scoped>
-.navbar {
-  background: rgba(255, 255, 255, 0.72);
-  border-bottom: 1px solid rgba(224, 231, 255, 0.9);
-  backdrop-filter: blur(14px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.mall-header {
+  border-bottom: 1px solid #dcdfe6;
+  background: #fff;
 }
 
-.navbar-inner {
+.top-bar {
+  background: #303133;
+  color: #dcdfe6;
+  font-size: 0.82rem;
+}
+
+.top-inner {
+  min-height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
-  gap: 16px;
+}
+
+.top-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.top-links a:hover {
+  color: #fff;
+}
+
+.main-head {
+  border-bottom: 1px solid #ebeef5;
+}
+
+.main-inner {
+  min-height: 96px;
+  display: grid;
+  grid-template-columns: auto minmax(460px, 1fr) auto;
+  gap: 20px;
+  align-items: center;
 }
 
 .brand {
@@ -85,70 +203,89 @@ onBeforeUnmount(() => {
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4f46e5, #0066cc);
   color: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
+  font-size: 1.1rem;
 }
 
 .brand-name {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #111827;
   line-height: 1.1;
 }
 
 .brand-sub {
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   color: #6b7280;
 }
 
-.nav-links {
+.search-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+:deep(.global-search .el-input__wrapper) {
+  border-radius: 10px 0 0 10px;
+}
+
+:deep(.global-search .el-input-group__append .el-button) {
+  border-radius: 0 10px 10px 0;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.hot-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #909399;
+}
+
+.hot-word {
+  background: transparent;
+  color: #606266;
+  font-size: 0.82rem;
+}
+
+.hot-word:hover {
+  color: var(--primary);
+}
+
+.head-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.nav-link {
+.action-btn {
+  min-width: 82px;
   min-height: 44px;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: #f5f7fa;
+  color: #303133;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   font-weight: 600;
-  color: #4b5563;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  color: #312e81;
-  background: #eef2ff;
-}
-
-.cart-link {
-  position: relative;
-  gap: 6px;
-}
-
-.cart-badge {
-  min-width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  background: #ef4444;
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 6px;
+.action-btn.active,
+.action-btn:hover {
+  background: #ecf5ff;
+  color: var(--primary);
 }
 
 .shake {
@@ -163,12 +300,44 @@ onBeforeUnmount(() => {
   80% { transform: translateX(2px); }
 }
 
+.category-nav {
+  background: #fff;
+}
+
+.category-inner {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.category-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.category-link {
+  border-radius: 8px;
+  min-height: 36px;
+  padding: 8px 12px;
+  color: #606266;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.category-link:hover,
+.category-link.active {
+  color: var(--primary);
+  background: #ecf5ff;
+}
+
 .hamburger {
   display: none;
   min-width: 44px;
   min-height: 44px;
   border-radius: 8px;
-  background: #eef2ff;
+  background: #ecf5ff;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -178,32 +347,46 @@ onBeforeUnmount(() => {
 .hamburger span {
   width: 18px;
   height: 2px;
-  background: #312e81;
+  background: var(--primary);
+}
+
+@media (max-width: 1024px) {
+  .main-inner {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .head-actions {
+    display: none;
+  }
 }
 
 @media (max-width: 760px) {
+  .main-inner {
+    grid-template-columns: 1fr auto;
+    min-height: auto;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .search-panel {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
   .hamburger {
     display: inline-flex;
   }
 
-  .nav-links {
-    position: absolute;
-    top: 72px;
-    right: 14px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(14px);
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    box-shadow: var(--shadow-soft);
-    flex-direction: column;
-    align-items: stretch;
-    padding: 8px;
-    min-width: 170px;
+  .category-nav {
     display: none;
   }
 
-  .nav-links.open {
-    display: flex;
+  .category-nav.open {
+    display: block;
+  }
+
+  .category-inner {
+    padding-bottom: 10px;
   }
 }
 </style>

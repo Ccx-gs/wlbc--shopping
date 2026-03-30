@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
 .global-toast {
   position: fixed;
   right: 20px;
-  top: 90px;
+  top: 126px;
   background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: #fff;
   padding: 12px 16px;
