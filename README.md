@@ -8,7 +8,7 @@
 ## Run Backend
 
 ```bash
-cd /home/runner/work/wlbc--shopping/wlbc--shopping/backend
+cd backend
 npm install
 npm run start
 ```
@@ -18,7 +18,7 @@ Backend API runs on `http://localhost:3000`.
 ## Run Frontend
 
 ```bash
-cd /home/runner/work/wlbc--shopping/wlbc--shopping/frontend
+cd frontend
 npm install
 npm run dev
 ```

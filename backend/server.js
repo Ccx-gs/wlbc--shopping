@@ -10,8 +10,9 @@ const dataFile = path.join(__dirname, 'data.json')
 
 const app = express()
 const PORT = 3000
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
 
-app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(cors({ origin: FRONTEND_URL }))
 app.use(express.json())
 
 const products = JSON.parse(fs.readFileSync(dataFile, 'utf-8'))
