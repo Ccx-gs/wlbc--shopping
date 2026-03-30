@@ -8,11 +8,11 @@
   --primary: #4f46e5;
   --primary-deep: #4338ca;
   --accent: #ef4444;
-  --bg: #f9fafb;
+  --bg: #f4f4f5;
   --text: #111827;
   --muted: #6b7280;
-  --card-radius: 12px;
-  --btn-radius: 8px;
+  --card-radius: 10px;
+  --btn-radius: 10px;
   --glass: rgba(255, 255, 255, 0.7);
   --shadow-soft: 0 8px 24px rgba(17, 24, 39, 0.06), 0 2px 8px rgba(17, 24, 39, 0.04);
   --shadow-elevated: 0 18px 40px rgba(79, 70, 229, 0.18), 0 8px 20px rgba(17, 24, 39, 0.08);
@@ -26,6 +26,7 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  background-color: var(--bg);
 }
 
 #app {
@@ -52,6 +53,11 @@ button:active {
   transform: scale(0.97);
 }
 
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--primary) 65%, white);
+  outline-offset: 2px;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -65,7 +71,19 @@ img {
 
 .page-content {
   flex: 1;
-  padding: 24px 0 80px;
+  padding: 18px 0 80px;
+}
+
+.el-button {
+  border-radius: var(--btn-radius);
+}
+
+.el-input__wrapper,
+.el-select__wrapper,
+.el-card,
+.el-dialog,
+.el-drawer {
+  border-radius: var(--card-radius);
 }
 
 .price {

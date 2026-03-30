@@ -9,6 +9,7 @@ const loading = ref(true)
 const selectedBrand = ref('all')
 const selectedRange = ref('all')
 const selectedCategory = ref(route.query.category || 'all')
+const keyword = ref(String(route.query.keyword || '').trim().toLowerCase())
 const sortBy = ref('default')
 
 const brands = computed(() => ['all', ...new Set(products.map(item => item.brand))])
@@ -27,6 +28,10 @@ const filteredProducts = computed(() => {
   const result = products.filter((item) => {
     const brandOk = selectedBrand.value === 'all' || item.brand === selectedBrand.value
     const categoryOk = selectedCategory.value === 'all' || item.category === selectedCategory.value
+    const keywordOk = !keyword.value
+      || item.name.toLowerCase().includes(keyword.value)
+      || item.brand.toLowerCase().includes(keyword.value)
+      || item.description.toLowerCase().includes(keyword.value)
 
     const price = item.promoPrice
     let rangeOk = true
@@ -35,7 +40,7 @@ const filteredProducts = computed(() => {
     if (selectedRange.value === '7000-12000') rangeOk = price > 7000 && price <= 12000
     if (selectedRange.value === '12000+') rangeOk = price > 12000
 
-    return brandOk && categoryOk && rangeOk
+    return brandOk && categoryOk && rangeOk && keywordOk
   })
 
   if (sortBy.value === 'sales') {
@@ -55,6 +60,10 @@ const filteredProducts = computed(() => {
 
 watch(() => route.query.category, (value) => {
   selectedCategory.value = value || 'all'
+})
+
+watch(() => route.query.keyword, (value) => {
+  keyword.value = String(value || '').trim().toLowerCase()
 })
 
 onMounted(() => {
