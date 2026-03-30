@@ -44,6 +44,7 @@ function goToDetail() {
     </div>
     <div class="product-info">
       <h3 class="product-name">{{ product.name }}</h3>
+      <p v-if="product.description" class="product-description">{{ product.description }}</p>
       <p class="product-price">{{ formatPrice(product.price) }}</p>
     </div>
   </article>
@@ -51,21 +52,26 @@ function goToDetail() {
 
 <style scoped>
 .product-card {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), #ffffff 40%);
+  border: 1px solid #e5ebf3;
+  border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
-  transition: box-shadow 0.15s, border-color 0.15s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 2px 8px rgba(15, 35, 60, 0.04);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .product-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-color: #c0c0c0;
+  box-shadow: 0 18px 34px rgba(28, 62, 104, 0.14);
+  border-color: #c7d7e9;
+  transform: translateY(-4px);
 }
 
 .product-image {
-  height: 180px;
+  height: 190px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,32 +81,46 @@ function goToDetail() {
 }
 
 .product-icon {
-  font-size: 3.5rem;
+  font-size: 3.4rem;
 }
 
 .category-tag {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
 }
 
 .product-info {
-  padding: 14px 16px 16px;
-  border-top: 1px solid #f0f0f0;
+  padding: 16px 16px 18px;
+  border-top: 1px solid rgba(96, 125, 156, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
 }
 
 .product-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #12233a;
   line-height: 1.4;
 }
 
+.product-description {
+  color: #64748b;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .product-price {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #0066cc;
+  color: #1f4f86;
+  margin-top: auto;
 }
 </style>
