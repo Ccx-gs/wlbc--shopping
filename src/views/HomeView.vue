@@ -4,19 +4,26 @@ import ProductCard from '../components/ProductCard.vue'
 import { products } from '../data/products.js'
 
 const searchQuery = ref('')
+const activeCategory = ref('all')
+
+const categories = computed(() => ['all', ...new Set(products.map(product => product.category))])
 
 const filteredProducts = computed(() => {
   const q = searchQuery.value.trim().toLowerCase()
-  if (!q) return products
-  return products.filter(p => p.name.toLowerCase().includes(q))
+  return products.filter((product) => {
+    const matchQuery = !q || product.name.toLowerCase().includes(q)
+    const matchCategory = activeCategory.value === 'all' || product.category === activeCategory.value
+    return matchQuery && matchCategory
+  })
 })
 </script>
 
 <template>
   <div class="home-view">
-    <div class="hero">
-      <h1 class="hero-title">TechStore</h1>
-      <p class="hero-subtitle">Premium tech products, delivered to your door.</p>
+    <section class="hero">
+      <p class="hero-kicker">New season collection</p>
+      <h1 class="hero-title">Experience premium tech, curated for modern life.</h1>
+      <p class="hero-subtitle">Discover flagship devices with a storefront crafted for speed, clarity, and delight.</p>
       <div class="search-bar">
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8" />
@@ -29,6 +36,32 @@ const filteredProducts = computed(() => {
           class="search-input"
         />
       </div>
+      <div class="hero-metrics">
+        <div class="metric-item">
+          <p class="metric-value">{{ products.length }}+</p>
+          <p class="metric-label">Premium products</p>
+        </div>
+        <div class="metric-item">
+          <p class="metric-value">24h</p>
+          <p class="metric-label">Fast dispatch</p>
+        </div>
+        <div class="metric-item">
+          <p class="metric-value">4.9/5</p>
+          <p class="metric-label">Customer rating</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="category-filters">
+      <button
+        v-for="category in categories"
+        :key="category"
+        class="filter-chip"
+        :class="{ active: activeCategory === category }"
+        @click="activeCategory = category"
+      >
+        {{ category }}
+      </button>
     </div>
 
     <div v-if="filteredProducts.length > 0" class="product-grid">
@@ -41,8 +74,8 @@ const filteredProducts = computed(() => {
 
     <div v-else class="empty-state">
       <p class="empty-icon">🔍</p>
-      <p class="empty-text">No products found for "{{ searchQuery }}"</p>
-      <button class="clear-btn" @click="searchQuery = ''">Clear search</button>
+      <p class="empty-text">No products found for this selection</p>
+      <button class="clear-btn" @click="searchQuery = ''; activeCategory = 'all'">Reset filters</button>
     </div>
   </div>
 </template>
@@ -50,23 +83,61 @@ const filteredProducts = computed(() => {
 <style scoped>
 .hero {
   text-align: center;
-  padding: 48px 0 40px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 56px 24px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: radial-gradient(circle at 20% 10%, #ecf4ff 0%, #f6f8fc 48%, #ffffff 100%);
+  border-radius: 26px;
+  box-shadow: 0 18px 40px rgba(15, 40, 80, 0.08);
   margin-bottom: 40px;
 }
 
-.hero-title {
-  font-size: 2.2rem;
+.hero-kicker {
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3e6ea8;
   font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-weight: 700;
+  color: #101828;
+  max-width: 760px;
+  margin: 0 auto 14px;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .hero-subtitle {
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 28px;
+  font-size: 1.02rem;
+  color: #516178;
+  margin: 0 auto 28px;
+  max-width: 620px;
+}
+
+.hero-metrics {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.metric-item {
+  min-width: 132px;
+}
+
+.metric-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1d3b61;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #64748b;
 }
 
 .search-bar {
@@ -88,28 +159,60 @@ const filteredProducts = computed(() => {
 
 .search-input {
   width: 100%;
-  padding: 12px 16px 12px 44px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  padding: 14px 16px 14px 44px;
+  border: 1px solid #d7dfeb;
+  border-radius: 12px;
   font-size: 0.95rem;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.95);
   color: #1a1a1a;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-input:focus {
-  border-color: #0066cc;
+  border-color: #5a8dca;
+  box-shadow: 0 0 0 4px rgba(54, 117, 192, 0.12);
 }
 
 .search-input::placeholder {
   color: #aaa;
 }
 
+.category-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  border: 1px solid #d7dfeb;
+  background: #fff;
+  color: #4a5f7a;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.filter-chip:hover {
+  border-color: #9cbde2;
+  color: #275891;
+}
+
+.filter-chip.active {
+  background: #1f4f86;
+  border-color: #1f4f86;
+  color: #fff;
+}
+
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 22px;
 }
 
 .empty-state {
@@ -130,16 +233,16 @@ const filteredProducts = computed(() => {
 
 .clear-btn {
   padding: 10px 24px;
-  background: #0066cc;
+  background: #1f4f86;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 999px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: background 0.15s;
 }
 
 .clear-btn:hover {
-  background: #0052a3;
+  background: #173f6e;
 }
 </style>

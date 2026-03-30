@@ -27,8 +27,9 @@ const route = useRoute()
 
 <style scoped>
 .navbar {
-  background: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom: 1px solid rgba(214, 224, 238, 0.8);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -47,7 +48,7 @@ const route = useRoute()
   gap: 10px;
   font-weight: 700;
   font-size: 1.2rem;
-  color: #1a1a1a;
+  color: #13263f;
   text-decoration: none;
 }
 
@@ -56,7 +57,7 @@ const route = useRoute()
 }
 
 .brand-name {
-  color: #0066cc;
+  color: #1f4f86;
 }
 
 .nav-links {
@@ -67,22 +68,22 @@ const route = useRoute()
 
 .nav-link {
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 999px;
   font-size: 0.95rem;
-  font-weight: 500;
-  color: #444;
+  font-weight: 600;
+  color: #4d6078;
   text-decoration: none;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .nav-link:hover {
-  background: #f0f4ff;
-  color: #0066cc;
+  background: #edf4ff;
+  color: #1f4f86;
 }
 
 .nav-link.active {
-  color: #0066cc;
-  background: #f0f4ff;
+  color: #1f4f86;
+  background: #e6effc;
 }
 
 .cart-link {
@@ -93,7 +94,7 @@ const route = useRoute()
 }
 
 .cart-badge {
-  background: #0066cc;
+  background: #1f4f86;
   color: #fff;
   font-size: 0.72rem;
   font-weight: 700;
