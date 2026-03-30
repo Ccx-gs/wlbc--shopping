@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import ProductCard from '../components/ProductCard.vue'
 import { products } from '../data/products.js'
 import { useCart } from '../composables/useCart.js'
 
@@ -8,317 +9,413 @@ const route = useRoute()
 const router = useRouter()
 const { addToCart } = useCart()
 
-const product = computed(() =>
-  products.find(p => p.id === Number(route.params.id))
-)
-
+const product = computed(() => products.find((p) => p.id === Number(route.params.id)))
+const currentImage = ref(0)
 const quantity = ref(1)
-const addedFeedback = ref(false)
+const selectedSkuId = ref('')
 
-const categoryColors = {
-  smartphone: { bg: '#e8f0fe', icon: '📱' },
-  laptop: { bg: '#e6f4ea', icon: '💻' },
-  tablet: { bg: '#fce8e6', icon: '📟' },
-  accessory: { bg: '#fef7e0', icon: '🎧' },
+const selectedSku = computed(() => {
+  if (!product.value) return null
+  if (!selectedSkuId.value) return product.value.skus[0]
+  return product.value.skus.find((sku) => sku.id === selectedSkuId.value) || product.value.skus[0]
+})
+
+const relatedProducts = computed(() => {
+  if (!product.value) return []
+  return products
+    .filter((item) => item.category === product.value.category && item.id !== product.value.id)
+    .slice(0, 4)
+})
+
+function formatPriceParts(price) {
+  const [integer, decimals] = Number(price || 0).toFixed(2).split('.')
+  return { integer, decimals }
 }
 
-function getCategoryStyle(category) {
-  return categoryColors[category] || { bg: '#f1f3f4', icon: '📦' }
+function chooseSku(skuId) {
+  selectedSkuId.value = skuId
 }
 
-function formatPrice(price) {
-  return '¥' + price.toLocaleString('zh-CN')
+function addItemToCart() {
+  if (!product.value || !selectedSku.value) return
+  const item = {
+    ...product.value,
+    price: selectedSku.value.price,
+    skuId: selectedSku.value.id,
+    skuName: selectedSku.value.name,
+    cartKey: `${product.value.id}-${selectedSku.value.id}`,
+    image: product.value.images[currentImage.value] || product.value.image,
+  }
+  addToCart(item, quantity.value)
+  window.dispatchEvent(new CustomEvent('toast:show', { detail: { message: '已加入购物车' } }))
 }
 
-function decrement() {
-  if (quantity.value > 1) quantity.value--
+function increaseQty() {
+  quantity.value += 1
 }
 
-function increment() {
-  if (product.value && quantity.value < product.value.stock) quantity.value++
-}
-
-function handleAddToCart() {
-  if (!product.value) return
-  addToCart(product.value, quantity.value)
-  addedFeedback.value = true
-  setTimeout(() => { addedFeedback.value = false }, 2500)
+function decreaseQty() {
+  if (quantity.value > 1) quantity.value -= 1
 }
 </script>
 
 <template>
   <div v-if="product" class="detail-view">
-    <button class="back-btn" @click="router.back()">← Back</button>
+    <button class="back-btn" @click="router.back()">← 返回</button>
 
-    <div class="detail-grid">
-      <div
-        class="detail-image"
-        :style="{ backgroundColor: getCategoryStyle(product.category).bg }"
-      >
-        <span class="detail-icon">{{ getCategoryStyle(product.category).icon }}</span>
-        <span class="detail-category">{{ product.category }}</span>
-      </div>
-
-      <div class="detail-info">
-        <h1 class="detail-name">{{ product.name }}</h1>
-        <p class="detail-price">{{ formatPrice(product.price) }}</p>
-        <p class="detail-stock" :class="{ low: product.stock < 10 }">
-          {{ product.stock > 0 ? `In stock: ${product.stock} units` : 'Out of stock' }}
-        </p>
-
-        <p class="detail-description">{{ product.description }}</p>
-
-        <div class="specs-block">
-          <h3 class="specs-title">Specifications</h3>
-          <dl class="specs-list">
-            <template v-for="(value, key) in product.specs" :key="key">
-              <dt class="spec-key">{{ key.charAt(0).toUpperCase() + key.slice(1) }}</dt>
-              <dd class="spec-value">{{ value }}</dd>
-            </template>
-          </dl>
-        </div>
-
-        <div class="add-to-cart-row">
-          <div class="qty-control">
-            <button class="qty-btn" @click="decrement" :disabled="quantity <= 1">−</button>
-            <span class="qty-display">{{ quantity }}</span>
-            <button class="qty-btn" @click="increment" :disabled="quantity >= product.stock">+</button>
-          </div>
+    <section class="main-card fade-up">
+      <div class="gallery">
+        <img :src="product.images[currentImage]" :alt="product.name" class="main-image" />
+        <div class="thumbs">
           <button
-            class="add-btn"
-            @click="handleAddToCart"
-            :disabled="product.stock === 0"
+            v-for="(img, idx) in product.images"
+            :key="img"
+            :class="['thumb', { active: currentImage === idx }]"
+            @click="currentImage = idx"
           >
-            Add to Cart
+            <img :src="img" :alt="`${product.name}-${idx}`" loading="lazy" />
           </button>
         </div>
-
-        <Transition name="fade">
-          <div v-if="addedFeedback" class="feedback-msg">
-            ✓ Added {{ quantity }} item{{ quantity > 1 ? 's' : '' }} to cart
-          </div>
-        </Transition>
       </div>
-    </div>
+
+      <div class="info">
+        <div class="labels">
+          <span v-if="product.isNew" class="label new">新品</span>
+          <span v-if="product.freeShipping" class="label ship">包邮</span>
+        </div>
+
+        <h1>{{ product.name }}</h1>
+        <p class="desc">{{ product.description }}</p>
+
+        <div class="price-wrap">
+          <p class="price sale">
+            <span class="currency">¥</span>
+            <span class="amount">{{ formatPriceParts(selectedSku.price).integer }}</span>
+            <span class="decimals">.{{ formatPriceParts(selectedSku.price).decimals }}</span>
+          </p>
+          <p class="origin">¥{{ Number(product.originalPrice).toFixed(2) }}</p>
+        </div>
+
+        <p class="stats">销量 {{ product.sales }} · {{ product.reviewCount }} 条评价 · 评分 {{ product.rating }}</p>
+
+        <div class="sku-group">
+          <p>选择规格</p>
+          <div class="sku-list">
+            <button
+              v-for="sku in product.skus"
+              :key="sku.id"
+              :class="['sku', { active: selectedSku.id === sku.id }]"
+              @click="chooseSku(sku.id)"
+            >
+              {{ sku.name }}
+            </button>
+          </div>
+        </div>
+
+        <div class="buy-row">
+          <div class="qty">
+            <button @click="decreaseQty">-</button>
+            <span>{{ quantity }}</span>
+            <button @click="increaseQty">+</button>
+          </div>
+          <button class="add-btn" @click="addItemToCart">加入购物车</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-html fade-up" v-html="product.detailHtml"></section>
+
+    <section class="review-section fade-up">
+      <h2>用户评价</h2>
+      <div class="reviews">
+        <article v-for="review in product.reviews" :key="review.user + review.date" class="review-item">
+          <div class="review-head">
+            <strong>{{ review.user }}</strong>
+            <span>{{ review.date }}</span>
+          </div>
+          <p class="score">评分 {{ review.score }}</p>
+          <p>{{ review.content }}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="related fade-up">
+      <h2>相关推荐</h2>
+      <div class="related-grid">
+        <ProductCard v-for="item in relatedProducts" :key="item.id" :product="item" />
+      </div>
+    </section>
   </div>
 
   <div v-else class="not-found">
-    <p>Product not found.</p>
-    <button class="back-btn" @click="router.push('/')">Go home</button>
+    <p>商品不存在</p>
+    <button @click="router.push('/')">返回首页</button>
   </div>
 </template>
 
 <style scoped>
-.back-btn {
-  background: none;
-  border: 1px solid #e0e0e0;
-  color: #444;
-  font-size: 0.88rem;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 28px;
-  transition: background 0.12s, border-color 0.12s;
-}
-
-.back-btn:hover {
-  background: #f5f5f5;
-  border-color: #ccc;
-}
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 40px;
-  align-items: start;
-}
-
-@media (max-width: 720px) {
-  .detail-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.detail-image {
-  border-radius: 4px;
-  height: 360px;
+.detail-view {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  border: 1px solid rgba(0,0,0,0.06);
+  gap: 18px;
 }
 
-.detail-icon {
-  font-size: 6rem;
+.back-btn {
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  width: fit-content;
 }
 
-.detail-category {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #666;
-}
-
-.detail-name {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 10px;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-}
-
-.detail-price {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #0066cc;
-  margin-bottom: 8px;
-}
-
-.detail-stock {
-  font-size: 0.85rem;
-  color: #2e7d32;
-  margin-bottom: 20px;
-}
-
-.detail-stock.low {
-  color: #e65100;
-}
-
-.detail-description {
-  font-size: 0.93rem;
-  line-height: 1.7;
-  color: #444;
-  margin-bottom: 24px;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 20px;
-}
-
-.specs-block {
-  margin-bottom: 28px;
-}
-
-.specs-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.specs-list {
+.main-card {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 6px 16px;
-  font-size: 0.88rem;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  padding: 16px;
 }
 
-.spec-key {
-  color: #888;
-  white-space: nowrap;
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.spec-value {
-  color: #1a1a1a;
-  font-weight: 500;
+.main-image {
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
-.add-to-cart-row {
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.thumb {
+  border-radius: 8px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  background: #fff;
+}
+
+.thumb.active {
+  border-color: #4f46e5;
+}
+
+.thumb img {
+  width: 100%;
+  height: 74px;
+  object-fit: cover;
+}
+
+.info h1 {
+  color: #111827;
+  margin: 10px 0 8px;
+  line-height: 1.2;
+}
+
+.labels {
+  display: flex;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.new {
+  background: #4f46e5;
+}
+
+.ship {
+  background: #ef4444;
+}
+
+.desc {
+  color: #6b7280;
+}
+
+.price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 10px 0 8px;
+}
+
+.sale {
+  color: #ef4444;
+}
+
+.origin {
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.stats {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.sku-group {
+  margin-top: 14px;
+}
+
+.sku-group p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.sku-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sku {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  padding: 0 12px;
+}
+
+.sku.active {
+  border-color: #4f46e5;
+  color: #312e81;
+  background: #eef2ff;
+}
+
+.buy-row {
+  margin-top: 14px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
+  gap: 10px;
 }
 
-.qty-control {
+.qty {
   display: flex;
   align-items: center;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
   overflow: hidden;
 }
 
-.qty-btn {
-  width: 40px;
-  height: 40px;
-  background: #f5f5f5;
-  border: none;
-  font-size: 1.2rem;
-  color: #333;
-  cursor: pointer;
-  transition: background 0.12s;
-  display: flex;
+.qty button,
+.qty span {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: #fff;
 }
 
-.qty-btn:hover:not(:disabled) {
-  background: #e8e8e8;
-}
-
-.qty-btn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-.qty-display {
-  width: 48px;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  border-left: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
-  height: 40px;
-  line-height: 40px;
+.qty button {
+  background: #f9fafb;
 }
 
 .add-btn {
-  flex: 1;
-  padding: 10px 24px;
-  background: #0066cc;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
   color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-  height: 40px;
+  font-weight: 700;
 }
 
-.add-btn:hover:not(:disabled) {
-  background: #0052a3;
+.detail-html,
+.review-section,
+.related {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  padding: 16px;
 }
 
-.add-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+.detail-html :deep(h3) {
+  margin-bottom: 8px;
 }
 
-.feedback-msg {
-  padding: 10px 16px;
-  background: #e6f4ea;
-  color: #1e7e34;
-  border: 1px solid #b7dfbf;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 500;
+.detail-html :deep(p) {
+  color: #374151;
+  margin-bottom: 12px;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s;
+.detail-html :deep(img) {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
+
+.reviews {
+  display: grid;
+  gap: 10px;
+}
+
+.review-item {
+  border: 1px solid #eef2f7;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.review-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.score {
+  color: #ef4444;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .not-found {
   text-align: center;
   padding: 80px 0;
-  color: #666;
+}
+
+.not-found button {
+  min-height: 44px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #fff;
+  padding: 10px 14px;
+}
+
+@media (max-width: 1024px) {
+  .main-card {
+    grid-template-columns: 1fr;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

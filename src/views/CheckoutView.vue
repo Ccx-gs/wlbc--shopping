@@ -11,376 +11,242 @@ const { user } = useUser()
 const orderSubmitted = ref(false)
 const submitting = ref(false)
 
-function formatPrice(price) {
-  return '¥' + price.toLocaleString('zh-CN')
+function formatPriceParts(price) {
+  const [integer, decimals] = Number(price || 0).toFixed(2).split('.')
+  return { integer, decimals }
 }
 
 function submitOrder() {
+  if (!cartCount.value) return
   submitting.value = true
   setTimeout(() => {
     clearCart()
-    orderSubmitted.value = true
     submitting.value = false
+    orderSubmitted.value = true
+    window.dispatchEvent(new CustomEvent('toast:show', { detail: { message: '订单提交成功' } }))
   }, 800)
-}
-
-const categoryIcons = {
-  smartphone: '📱',
-  laptop: '💻',
-  tablet: '📟',
-  accessory: '🎧',
-}
-
-function getIcon(category) {
-  return categoryIcons[category] || '📦'
 }
 </script>
 
 <template>
   <div class="checkout-view">
-    <!-- Success state -->
-    <div v-if="orderSubmitted" class="success-state">
-      <div class="success-icon">✓</div>
-      <h1 class="success-title">Order Placed Successfully!</h1>
-      <p class="success-sub">Thank you for your purchase. Your order is being processed.</p>
-      <button class="home-btn" @click="router.push('/')">Continue Shopping</button>
+    <div v-if="orderSubmitted" class="success-state fade-up">
+      <div class="icon">🎉</div>
+      <h1>下单成功</h1>
+      <p>订单已提交，预计 24 小时内完成发货。</p>
+      <button @click="router.push('/')">返回首页</button>
     </div>
 
-    <!-- Checkout form -->
     <div v-else-if="cartCount > 0" class="checkout-layout">
-      <div class="checkout-main">
-        <h1 class="page-title">Checkout</h1>
+      <section class="main fade-up">
+        <h1>确认订单</h1>
 
-        <!-- Shipping info -->
-        <section class="section-card">
-          <h2 class="section-title">Shipping Address</h2>
-          <div class="address-block">
-            <p class="address-name">{{ user.name }}</p>
-            <p class="address-line">{{ user.address }}</p>
-          </div>
-        </section>
-
-        <!-- Order items -->
-        <section class="section-card">
-          <h2 class="section-title">Order Items</h2>
-          <div class="order-items">
-            <div
-              v-for="item in cartItems"
-              :key="item.id"
-              class="order-item"
-            >
-              <span class="order-item-icon">{{ getIcon(item.category) }}</span>
-              <div class="order-item-info">
-                <span class="order-item-name">{{ item.name }}</span>
-                <span class="order-item-qty">× {{ item.quantity }}</span>
-              </div>
-              <span class="order-item-price">{{ formatPrice(item.price * item.quantity) }}</span>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- Summary sidebar -->
-      <aside class="checkout-sidebar">
-        <div class="summary-card">
-          <h2 class="summary-title">Payment Summary</h2>
-          <div class="summary-row">
-            <span>Subtotal ({{ cartCount }} items)</span>
-            <span>{{ formatPrice(cartTotal) }}</span>
-          </div>
-          <div class="summary-row">
-            <span>Shipping</span>
-            <span class="free">Free</span>
-          </div>
-          <div class="summary-row">
-            <span>Tax</span>
-            <span>Included</span>
-          </div>
-          <div class="summary-divider"></div>
-          <div class="summary-row total-row">
-            <span>Total</span>
-            <span class="total-amount">{{ formatPrice(cartTotal) }}</span>
-          </div>
-          <button
-            class="submit-btn"
-            @click="submitOrder"
-            :disabled="submitting"
-          >
-            <span v-if="submitting">Processing...</span>
-            <span v-else>Submit Order</span>
-          </button>
-          <button class="back-btn" @click="router.push('/cart')">← Back to Cart</button>
+        <div class="card">
+          <h2>收货信息</h2>
+          <p>{{ user.name }}</p>
+          <p class="muted">{{ user.address }}</p>
         </div>
+
+        <div class="card">
+          <h2>商品明细</h2>
+          <div class="items">
+            <article v-for="item in cartItems" :key="item.cartKey || item.id" class="item-row">
+              <img :src="item.image" :alt="item.name" loading="lazy" />
+              <div>
+                <p class="name">{{ item.name }}</p>
+                <p class="muted">{{ item.skuName || '默认规格' }} × {{ item.quantity }}</p>
+              </div>
+              <p class="price item-price">
+                <span class="currency">¥</span>
+                <span class="amount">{{ formatPriceParts(item.price * item.quantity).integer }}</span>
+                <span class="decimals">.{{ formatPriceParts(item.price * item.quantity).decimals }}</span>
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <aside class="summary fade-up">
+        <h2>订单汇总</h2>
+        <div class="row"><span>商品件数</span><span>{{ cartCount }}</span></div>
+        <div class="row"><span>商品金额</span>
+          <p class="price"><span class="currency">¥</span><span class="amount">{{ formatPriceParts(cartTotal).integer }}</span><span class="decimals">.{{ formatPriceParts(cartTotal).decimals }}</span></p>
+        </div>
+        <div class="row"><span>运费</span><span class="free">免运费</span></div>
+        <div class="line"></div>
+        <div class="row total"><span>应付总额</span>
+          <p class="price"><span class="currency">¥</span><span class="amount">{{ formatPriceParts(cartTotal).integer }}</span><span class="decimals">.{{ formatPriceParts(cartTotal).decimals }}</span></p>
+        </div>
+        <button :disabled="submitting" @click="submitOrder">{{ submitting ? '处理中...' : '提交订单' }}</button>
       </aside>
     </div>
 
-    <!-- Empty cart redirect -->
-    <div v-else class="empty-checkout">
-      <p>Your cart is empty.</p>
-      <button class="home-btn" @click="router.push('/')">Go Shopping</button>
+    <div v-else class="empty fade-up">
+      <div class="icon">📦</div>
+      <h2>暂无待结算商品</h2>
+      <p>先去购物车添加商品，再来下单吧。</p>
+      <button @click="router.push('/list')">去逛商城</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.page-title {
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 24px;
-  letter-spacing: -0.01em;
+.checkout-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .checkout-layout {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 28px;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
   align-items: start;
 }
 
-@media (max-width: 800px) {
-  .checkout-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-.checkout-main {
+.main {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 
-.section-card {
+.main h1 {
+  color: #111827;
+}
+
+.card,
+.summary,
+.success-state,
+.empty {
   background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 20px 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
 }
 
-.section-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #666;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f0f0f0;
+.card {
+  padding: 14px;
 }
 
-.address-block {
-  padding: 4px 0;
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
-.address-name {
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 4px;
-}
-
-.address-line {
-  color: #555;
-  font-size: 0.92rem;
-}
-
-.order-items {
+.items {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.order-item {
-  display: flex;
+.item-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 10px;
   align-items: center;
-  gap: 12px;
-  padding: 8px 0;
-  border-bottom: 1px solid #f5f5f5;
 }
 
-.order-item:last-child {
-  border-bottom: none;
+.item-row img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
-.order-item-icon {
-  font-size: 1.4rem;
-  width: 32px;
-  text-align: center;
+.name {
+  color: #111827;
+  margin-bottom: 4px;
 }
 
-.order-item-info {
-  flex: 1;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  flex-wrap: wrap;
+.item-price {
+  color: #ef4444;
 }
 
-.order-item-name {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #1a1a1a;
-}
-
-.order-item-qty {
-  font-size: 0.82rem;
-  color: #888;
-}
-
-.order-item-price {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #0066cc;
-  white-space: nowrap;
-}
-
-/* Sidebar */
-.summary-card {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 20px;
+.summary {
+  padding: 14px;
   position: sticky;
-  top: 80px;
+  top: 88px;
 }
 
-.summary-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f0f0f0;
+.summary h2 {
+  margin-bottom: 12px;
 }
 
-.summary-row {
+.row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
-  color: #444;
   margin-bottom: 10px;
+  color: #4b5563;
+  align-items: center;
+}
+
+.total {
+  color: #111827;
+  font-weight: 700;
+}
+
+.line {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 10px 0;
 }
 
 .free {
-  color: #2e7d32;
-  font-weight: 500;
+  color: #16a34a;
 }
 
-.summary-divider {
-  height: 1px;
-  background: #e0e0e0;
-  margin: 12px 0;
-}
-
-.total-row {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 20px;
-}
-
-.total-amount {
-  color: #0066cc;
-  font-size: 1.15rem;
-}
-
-.submit-btn {
+.summary button,
+.success-state button,
+.empty button {
   width: 100%;
-  padding: 12px;
-  background: #0066cc;
+  min-height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
   color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-  margin-bottom: 10px;
+  font-weight: 700;
 }
 
-.submit-btn:hover:not(:disabled) {
-  background: #0052a3;
+.summary button:disabled {
+  opacity: 0.6;
 }
 
-.submit-btn:disabled {
-  background: #7aaedb;
-  cursor: not-allowed;
+.muted {
+  color: #6b7280;
+  font-size: 0.9rem;
 }
 
-.back-btn {
-  width: 100%;
-  padding: 10px;
-  background: none;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  font-size: 0.88rem;
-  color: #555;
-  cursor: pointer;
-  transition: background 0.12s;
-}
-
-.back-btn:hover {
-  background: #f5f5f5;
-}
-
-/* Success state */
-.success-state {
+.success-state,
+.empty {
   text-align: center;
-  padding: 80px 0;
-  max-width: 480px;
+  padding: 56px 20px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
-.success-icon {
-  width: 72px;
-  height: 72px;
-  background: #0066cc;
-  color: #fff;
-  border-radius: 50%;
-  font-size: 2rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 24px;
+.icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
 }
 
-.success-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 10px;
+.success-state h1,
+.empty h2 {
+  color: #111827;
+  margin-bottom: 6px;
 }
 
-.success-sub {
-  color: #666;
-  margin-bottom: 32px;
-  font-size: 0.95rem;
+.success-state p,
+.empty p {
+  color: #6b7280;
+  margin-bottom: 14px;
 }
 
-.home-btn {
-  padding: 12px 32px;
-  background: #0066cc;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-}
+@media (max-width: 1024px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
 
-.home-btn:hover {
-  background: #0052a3;
-}
-
-/* Empty checkout */
-.empty-checkout {
-  text-align: center;
-  padding: 80px 0;
-  color: #666;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  .summary {
+    position: static;
+  }
 }
 </style>
