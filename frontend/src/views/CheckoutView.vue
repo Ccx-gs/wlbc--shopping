@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCart } from '../composables/useCart.js'
 import { useUser } from '../composables/useUser.js'
 
 const router = useRouter()
-const { cartItems, cartTotal, cartCount, clearCart } = useCart()
+const { cartItems, cartTotal, cartCount, fetchCart, submitOrder: submitOrderApi } = useCart()
 const { user } = useUser()
 
 const orderSubmitted = ref(false)
@@ -19,13 +19,16 @@ function formatPriceParts(price) {
 function submitOrder() {
   if (!cartCount.value) return
   submitting.value = true
-  setTimeout(() => {
-    clearCart()
+  submitOrderApi().then(() => {
     submitting.value = false
     orderSubmitted.value = true
     window.dispatchEvent(new CustomEvent('toast:show', { detail: { message: '订单提交成功' } }))
-  }, 800)
+  })
 }
+
+onMounted(() => {
+  fetchCart()
+})
 </script>
 
 <template>

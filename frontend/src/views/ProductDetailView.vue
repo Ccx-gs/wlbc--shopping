@@ -1,15 +1,16 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
-import { products } from '../data/products.js'
 import { useCart } from '../composables/useCart.js'
+import http from '../api/http.js'
 
 const route = useRoute()
 const router = useRouter()
 const { addToCart } = useCart()
 
-const product = computed(() => products.find((p) => p.id === Number(route.params.id)))
+const product = ref(null)
+const allProducts = ref([])
 const currentImage = ref(0)
 const quantity = ref(1)
 const selectedSkuId = ref('')
@@ -22,7 +23,7 @@ const selectedSku = computed(() => {
 
 const relatedProducts = computed(() => {
   if (!product.value) return []
-  return products
+  return allProducts.value
     .filter((item) => item.category === product.value.category && item.id !== product.value.id)
     .slice(0, 4)
 })
@@ -57,6 +58,27 @@ function increaseQty() {
 function decreaseQty() {
   if (quantity.value > 1) quantity.value -= 1
 }
+
+async function loadProduct(id) {
+  const [{ data: detail }, { data: list }] = await Promise.all([
+    http.get(`/products/${id}`),
+    http.get('/products'),
+  ])
+
+  product.value = detail
+  allProducts.value = Array.isArray(list) ? list : []
+  selectedSkuId.value = detail?.skus?.[0]?.id || ''
+  currentImage.value = 0
+  quantity.value = 1
+}
+
+onMounted(() => {
+  loadProduct(route.params.id)
+})
+
+watch(() => route.params.id, (id) => {
+  loadProduct(id)
+})
 </script>
 
 <template>
