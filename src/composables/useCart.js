@@ -6,33 +6,47 @@ function saveCart() {
   localStorage.setItem('cartItems', JSON.stringify(cartItems.value))
 }
 
+function emitCartUpdated(detail = {}) {
+  window.dispatchEvent(new CustomEvent('cart:updated', {
+    detail: {
+      count: cartItems.value.reduce((sum, item) => sum + item.quantity, 0),
+      ...detail,
+    },
+  }))
+}
+
 export function useCart() {
   function addToCart(product, quantity = 1) {
-    const existing = cartItems.value.find(item => item.id === product.id)
+    const key = product.cartKey || `${product.id}-${product.skuId || 'default'}`
+    const existing = cartItems.value.find(item => item.cartKey === key)
     if (existing) {
       existing.quantity += quantity
     } else {
-      cartItems.value.push({ ...product, quantity })
+      cartItems.value.push({ ...product, cartKey: key, quantity })
     }
     saveCart()
+    emitCartUpdated({ action: 'add', name: product.name, quantity })
   }
 
-  function removeFromCart(productId) {
-    cartItems.value = cartItems.value.filter(item => item.id !== productId)
+  function removeFromCart(itemKey) {
+    cartItems.value = cartItems.value.filter(item => item.cartKey !== itemKey && item.id !== itemKey)
     saveCart()
+    emitCartUpdated({ action: 'remove' })
   }
 
-  function updateQuantity(productId, quantity) {
-    const item = cartItems.value.find(item => item.id === productId)
+  function updateQuantity(itemKey, quantity) {
+    const item = cartItems.value.find(item => item.cartKey === itemKey || item.id === itemKey)
     if (item) {
       item.quantity = Math.max(1, quantity)
       saveCart()
+      emitCartUpdated({ action: 'update' })
     }
   }
 
   function clearCart() {
     cartItems.value = []
     saveCart()
+    emitCartUpdated({ action: 'clear' })
   }
 
   const cartCount = computed(() =>
