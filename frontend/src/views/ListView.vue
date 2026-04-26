@@ -88,7 +88,8 @@ async function fetchProducts() {
     categories.value = Array.isArray(data?.categories) && data.categories.length
       ? ['all', ...data.categories]
       : defaultCategories
-  } catch {
+  } catch (error) {
+    console.error('Failed to fetch products:', error)
     products.value = []
     totalPages.value = 1
     requestError.value = '商品数据加载失败，请稍后重试'
