@@ -15,7 +15,8 @@ const sortBy = ref('default')
 const page = ref(1)
 const pageSize = ref(8)
 const totalPages = ref(1)
-const categories = ref(['all', 'smartphone', 'laptop', 'tablet', 'audio', 'wearable', 'gaming'])
+const defaultCategories = ['all', 'smartphone', 'laptop', 'tablet', 'audio', 'wearable', 'gaming']
+const categories = ref(defaultCategories)
 
 const brands = computed(() => ['all', ...new Set(products.value.map(item => item.brand))])
 
@@ -86,7 +87,7 @@ async function fetchProducts() {
     totalPages.value = Math.max(1, Number(data?.totalPages) || 1)
     categories.value = Array.isArray(data?.categories) && data.categories.length
       ? ['all', ...data.categories]
-      : categories.value
+      : defaultCategories
   } finally {
     setTimeout(() => {
       loading.value = false
