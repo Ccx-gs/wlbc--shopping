@@ -11,11 +11,14 @@ const dataFile = path.join(__dirname, 'data.json')
 const app = express()
 const PORT = 3000
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
+const DEFAULT_PAGE_SIZE = 8
+const MAX_PAGE_SIZE = 50
 
 app.use(cors({ origin: FRONTEND_URL }))
 app.use(express.json())
 
 const products = JSON.parse(fs.readFileSync(dataFile, 'utf-8'))
+const productCategories = [...new Set(products.map((item) => item.category))]
 let cart = []
 
 function normalizeCartItem(item) {
@@ -47,8 +50,11 @@ function normalizeCartItem(item) {
 app.get('/api/products', (req, res) => {
   const category = String(req.query.category || '').trim()
   const search = String(req.query.search || '').trim().toLowerCase()
+  const page = Number(req.query.page)
+  const pageSize = Number(req.query.pageSize)
+  const usePagination = Number.isFinite(page) || Number.isFinite(pageSize)
 
-  const data = products.filter((item) => {
+  const filtered = products.filter((item) => {
     const categoryOk = !category || category === 'all' || item.category === category
     const searchOk = !search
       || item.name.toLowerCase().includes(search)
@@ -57,7 +63,27 @@ app.get('/api/products', (req, res) => {
     return categoryOk && searchOk
   })
 
-  res.json(data)
+  if (!usePagination) {
+    return res.json(filtered)
+  }
+
+  const normalizedPageSize = Math.max(
+    1,
+    Math.min(MAX_PAGE_SIZE, Number.isFinite(pageSize) ? Math.floor(pageSize) : DEFAULT_PAGE_SIZE),
+  )
+  const total = filtered.length
+  const totalPages = Math.max(1, Math.ceil(total / normalizedPageSize))
+  const normalizedPage = Math.min(totalPages, Math.max(1, Number.isFinite(page) ? Math.floor(page) : 1))
+  const start = (normalizedPage - 1) * normalizedPageSize
+  const list = filtered.slice(start, start + normalizedPageSize)
+  res.json({
+    list,
+    total,
+    page: normalizedPage,
+    pageSize: normalizedPageSize,
+    totalPages,
+    categories: productCategories,
+  })
 })
 
 app.get('/api/products/:id', (req, res) => {

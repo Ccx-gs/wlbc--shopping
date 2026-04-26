@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
-import http from '../api/http.js'
+import request from '../api/request.js'
 
 const route = useRoute()
 const products = ref([])
@@ -12,6 +12,12 @@ const selectedRange = ref('all')
 const selectedCategory = ref(route.query.category || 'all')
 const keyword = ref(String(route.query.keyword || '').trim().toLowerCase())
 const sortBy = ref('default')
+const page = ref(1)
+const pageSize = ref(8)
+const totalPages = ref(1)
+const defaultCategories = ['all', 'smartphone', 'laptop', 'tablet', 'audio', 'wearable', 'gaming']
+const categories = ref(defaultCategories)
+const requestError = ref('')
 
 const brands = computed(() => ['all', ...new Set(products.value.map(item => item.brand))])
 
@@ -23,16 +29,9 @@ const ranges = [
   { key: '12000+', label: '¥12000+' },
 ]
 
-const categories = computed(() => ['all', ...new Set(products.value.map(item => item.category))])
-
 const filteredProducts = computed(() => {
   const result = products.value.filter((item) => {
     const brandOk = selectedBrand.value === 'all' || item.brand === selectedBrand.value
-    const categoryOk = selectedCategory.value === 'all' || item.category === selectedCategory.value
-    const keywordOk = !keyword.value
-      || item.name.toLowerCase().includes(keyword.value)
-      || item.brand.toLowerCase().includes(keyword.value)
-      || item.description.toLowerCase().includes(keyword.value)
 
     const price = item.promoPrice
     let rangeOk = true
@@ -41,7 +40,7 @@ const filteredProducts = computed(() => {
     if (selectedRange.value === '7000-12000') rangeOk = price > 7000 && price <= 12000
     if (selectedRange.value === '12000+') rangeOk = price > 12000
 
-    return brandOk && categoryOk && rangeOk && keywordOk
+    return brandOk && rangeOk
   })
 
   if (sortBy.value === 'sales') {
@@ -59,12 +58,64 @@ const filteredProducts = computed(() => {
   return result
 })
 
-watch(() => route.query.category, (value) => {
-  selectedCategory.value = value || 'all'
+const visiblePages = computed(() => {
+  const count = Math.min(5, totalPages.value)
+  const start = Math.max(1, Math.min(page.value - 2, totalPages.value - count + 1))
+  return Array.from({ length: count }, (_, idx) => start + idx)
 })
 
-watch(() => route.query.keyword, (value) => {
-  keyword.value = String(value || '').trim().toLowerCase()
+async function fetchProducts() {
+  loading.value = true
+  requestError.value = ''
+  try {
+    const data = await request('/products', {
+      params: {
+        page: page.value,
+        pageSize: pageSize.value,
+        category: selectedCategory.value,
+        search: keyword.value,
+      },
+    })
+
+    if (Array.isArray(data)) {
+      products.value = data
+      totalPages.value = 1
+      return
+    }
+
+    products.value = Array.isArray(data?.list) ? data.list : []
+    totalPages.value = Math.max(1, Number(data?.totalPages) || 1)
+    categories.value = Array.isArray(data?.categories) && data.categories.length
+      ? ['all', ...data.categories]
+      : defaultCategories
+  } catch (error) {
+    console.error('Failed to fetch products:', error)
+    products.value = []
+    totalPages.value = 1
+    requestError.value = '商品数据加载失败，请稍后重试'
+  } finally {
+    loading.value = false
+  }
+}
+
+function onCategoryChange() {
+  selectedBrand.value = 'all'
+  page.value = 1
+  fetchProducts()
+}
+
+function goPage(nextPage) {
+  if (nextPage < 1 || nextPage > totalPages.value || nextPage === page.value) return
+  page.value = nextPage
+  fetchProducts()
+}
+
+watch([() => route.query.category, () => route.query.keyword], ([category, queryKeyword]) => {
+  selectedCategory.value = category || 'all'
+  keyword.value = String(queryKeyword || '').trim().toLowerCase()
+  selectedBrand.value = 'all'
+  page.value = 1
+  fetchProducts()
 })
 
 onMounted(() => {
@@ -75,12 +126,7 @@ onMounted(() => {
   }, { threshold: 0.1 })
   document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el))
 
-  http.get('/products').then(({ data }) => {
-    products.value = Array.isArray(data) ? data : []
-    setTimeout(() => {
-      loading.value = false
-    }, 700)
-  })
+  fetchProducts()
 })
 </script>
 
@@ -94,7 +140,7 @@ onMounted(() => {
     <section class="filters fade-up">
       <div class="filter-group">
         <label>分类</label>
-        <select v-model="selectedCategory">
+        <select v-model="selectedCategory" @change="onCategoryChange">
           <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
         </select>
       </div>
@@ -131,6 +177,21 @@ onMounted(() => {
     <section v-else class="product-grid">
       <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
       <p v-if="filteredProducts.length === 0" class="empty">暂无符合筛选条件的商品</p>
+    </section>
+
+    <p v-if="!loading && requestError" class="error-message">{{ requestError }}</p>
+
+    <section v-if="!loading && totalPages > 1" class="pagination fade-up">
+      <button :disabled="page === 1" @click="goPage(page - 1)">上一页</button>
+      <button
+        v-for="p in visiblePages"
+        :key="p"
+        :class="{ active: p === page }"
+        @click="goPage(p)"
+      >
+        {{ p }}
+      </button>
+      <button :disabled="page === totalPages" @click="goPage(page + 1)">下一页</button>
     </section>
   </div>
 </template>
@@ -209,6 +270,38 @@ onMounted(() => {
   text-align: center;
   padding: 38px 0;
   color: #6b7280;
+}
+
+.error-message {
+  text-align: center;
+  color: #ef4444;
+}
+
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  min-height: 40px;
+  min-width: 40px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  padding: 0 12px;
+}
+
+.pagination button.active {
+  border-color: #4f46e5;
+  background: #4f46e5;
+  color: #fff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media (max-width: 1024px) {
