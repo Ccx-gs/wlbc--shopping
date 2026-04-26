@@ -17,6 +17,7 @@ const pageSize = ref(8)
 const totalPages = ref(1)
 const defaultCategories = ['all', 'smartphone', 'laptop', 'tablet', 'audio', 'wearable', 'gaming']
 const categories = ref(defaultCategories)
+const requestError = ref('')
 
 const brands = computed(() => ['all', ...new Set(products.value.map(item => item.brand))])
 
@@ -31,7 +32,6 @@ const ranges = [
 const filteredProducts = computed(() => {
   const result = products.value.filter((item) => {
     const brandOk = selectedBrand.value === 'all' || item.brand === selectedBrand.value
-    const categoryOk = selectedCategory.value === 'all' || item.category === selectedCategory.value
 
     const price = item.promoPrice
     let rangeOk = true
@@ -40,7 +40,7 @@ const filteredProducts = computed(() => {
     if (selectedRange.value === '7000-12000') rangeOk = price > 7000 && price <= 12000
     if (selectedRange.value === '12000+') rangeOk = price > 12000
 
-    return brandOk && categoryOk && rangeOk
+    return brandOk && rangeOk
   })
 
   if (sortBy.value === 'sales') {
@@ -67,6 +67,7 @@ const visiblePages = computed(() => {
 
 async function fetchProducts() {
   loading.value = true
+  requestError.value = ''
   try {
     const data = await request('/products', {
       params: {
@@ -88,11 +89,21 @@ async function fetchProducts() {
     categories.value = Array.isArray(data?.categories) && data.categories.length
       ? ['all', ...data.categories]
       : defaultCategories
+  } catch {
+    products.value = []
+    totalPages.value = 1
+    requestError.value = '商品数据加载失败，请稍后重试'
   } finally {
     setTimeout(() => {
       loading.value = false
     }, 300)
   }
+}
+
+function onCategoryChange() {
+  selectedBrand.value = 'all'
+  page.value = 1
+  fetchProducts()
 }
 
 function goPage(nextPage) {
@@ -101,18 +112,9 @@ function goPage(nextPage) {
   fetchProducts()
 }
 
-watch(() => route.query.category, (value) => {
-  selectedCategory.value = value || 'all'
-  page.value = 1
-})
-
-watch(() => route.query.keyword, (value) => {
-  keyword.value = String(value || '').trim().toLowerCase()
-  page.value = 1
-  fetchProducts()
-})
-
-watch(selectedCategory, () => {
+watch([() => route.query.category, () => route.query.keyword], ([category, queryKeyword]) => {
+  selectedCategory.value = category || 'all'
+  keyword.value = String(queryKeyword || '').trim().toLowerCase()
   selectedBrand.value = 'all'
   page.value = 1
   fetchProducts()
@@ -140,7 +142,7 @@ onMounted(() => {
     <section class="filters fade-up">
       <div class="filter-group">
         <label>分类</label>
-        <select v-model="selectedCategory">
+        <select v-model="selectedCategory" @change="onCategoryChange">
           <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
         </select>
       </div>
@@ -178,6 +180,8 @@ onMounted(() => {
       <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
       <p v-if="filteredProducts.length === 0" class="empty">暂无符合筛选条件的商品</p>
     </section>
+
+    <p v-if="!loading && requestError" class="error-message">{{ requestError }}</p>
 
     <section v-if="!loading && totalPages > 1" class="pagination fade-up">
       <button :disabled="page === 1" @click="goPage(page - 1)">上一页</button>
@@ -268,6 +272,11 @@ onMounted(() => {
   text-align: center;
   padding: 38px 0;
   color: #6b7280;
+}
+
+.error-message {
+  text-align: center;
+  color: #ef4444;
 }
 
 .pagination {

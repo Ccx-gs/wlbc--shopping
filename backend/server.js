@@ -11,6 +11,8 @@ const dataFile = path.join(__dirname, 'data.json')
 const app = express()
 const PORT = 3000
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
+const DEFAULT_PAGE_SIZE = 8
+const MAX_PAGE_SIZE = 50
 
 app.use(cors({ origin: FRONTEND_URL }))
 app.use(express.json())
@@ -64,7 +66,10 @@ app.get('/api/products', (req, res) => {
     return res.json(filtered)
   }
 
-  const normalizedPageSize = Math.max(1, Math.min(50, Number.isFinite(pageSize) ? Math.floor(pageSize) : 8))
+  const normalizedPageSize = Math.max(
+    1,
+    Math.min(MAX_PAGE_SIZE, Number.isFinite(pageSize) ? Math.floor(pageSize) : DEFAULT_PAGE_SIZE),
+  )
   const total = filtered.length
   const totalPages = Math.max(1, Math.ceil(total / normalizedPageSize))
   const normalizedPage = Math.min(totalPages, Math.max(1, Number.isFinite(page) ? Math.floor(page) : 1))
