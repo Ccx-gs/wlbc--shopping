@@ -59,10 +59,9 @@ const filteredProducts = computed(() => {
 })
 
 const visiblePages = computed(() => {
-  const start = Math.max(1, page.value - 2)
-  const end = Math.min(totalPages.value, start + 4)
-  const first = Math.max(1, end - 4)
-  return Array.from({ length: end - first + 1 }, (_, idx) => first + idx)
+  const count = Math.min(5, totalPages.value)
+  const start = Math.max(1, Math.min(page.value - 2, totalPages.value - count + 1))
+  return Array.from({ length: count }, (_, idx) => start + idx)
 })
 
 async function fetchProducts() {
@@ -94,9 +93,7 @@ async function fetchProducts() {
     totalPages.value = 1
     requestError.value = '商品数据加载失败，请稍后重试'
   } finally {
-    setTimeout(() => {
-      loading.value = false
-    }, 300)
+    loading.value = false
   }
 }
 

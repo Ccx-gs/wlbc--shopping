@@ -18,6 +18,7 @@ app.use(cors({ origin: FRONTEND_URL }))
 app.use(express.json())
 
 const products = JSON.parse(fs.readFileSync(dataFile, 'utf-8'))
+const productCategories = [...new Set(products.map((item) => item.category))]
 let cart = []
 
 function normalizeCartItem(item) {
@@ -75,15 +76,13 @@ app.get('/api/products', (req, res) => {
   const normalizedPage = Math.min(totalPages, Math.max(1, Number.isFinite(page) ? Math.floor(page) : 1))
   const start = (normalizedPage - 1) * normalizedPageSize
   const list = filtered.slice(start, start + normalizedPageSize)
-  const categories = [...new Set(products.map((item) => item.category))]
-
   res.json({
     list,
     total,
     page: normalizedPage,
     pageSize: normalizedPageSize,
     totalPages,
-    categories,
+    categories: productCategories,
   })
 })
 
