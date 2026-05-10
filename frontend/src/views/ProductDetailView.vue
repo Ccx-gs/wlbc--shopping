@@ -2,6 +2,8 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
+import PromotionTag from '../components/PromotionTag.vue'
+import PromoCountdown from '../components/PromoCountdown.vue'
 import { useCart } from '../composables/useCart.js'
 import http from '../api/http.js'
 
@@ -14,6 +16,7 @@ const allProducts = ref([])
 const currentImage = ref(0)
 const quantity = ref(1)
 const selectedSkuId = ref('')
+const promoEndsAt = ref('')
 
 const selectedSku = computed(() => {
   if (!product.value) return null
@@ -27,6 +30,30 @@ const relatedProducts = computed(() => {
     .filter((item) => item.category === product.value.category && item.id !== product.value.id)
     .slice(0, 4)
 })
+
+const promotionInfo = computed(() => {
+  if (!product.value) return null
+
+  const originPrice = Number(product.value.originalPrice || 0)
+  const currentPrice = Number(selectedSku.value?.price || product.value.promoPrice || product.value.price || 0)
+  const discountAmount = Math.max(0, originPrice - currentPrice)
+  const discountRatio = originPrice > 0 ? currentPrice / originPrice : 1
+  const discountRate = originPrice > 0 && discountAmount > 0
+    ? Math.round(discountRatio * 100) / 10
+    : 10
+
+  return {
+    title: discountAmount > 0 ? `限时直降 ¥${Math.round(discountAmount)}` : '限时优惠',
+    subtitle: discountAmount > 0 ? `${discountRate} 折` : '活动进行中',
+    endAt: promoEndsAt.value,
+    discountAmount,
+  }
+})
+
+function createPromoEndAt(productId) {
+  const offsetHours = 4 + (Number(productId || 1) % 4) * 2
+  return new Date(Date.now() + offsetHours * 60 * 60 * 1000).toISOString()
+}
 
 function formatPriceParts(price) {
   const [integer, decimals] = Number(price || 0).toFixed(2).split('.')
@@ -70,6 +97,7 @@ async function loadProduct(id) {
   selectedSkuId.value = detail?.skus?.[0]?.id || ''
   currentImage.value = 0
   quantity.value = 1
+  promoEndsAt.value = createPromoEndAt(id)
 }
 
 onMounted(() => {
@@ -105,6 +133,7 @@ watch(() => route.params.id, (id) => {
           <span v-if="product.isNew" class="label new">新品</span>
           <span v-if="product.freeShipping" class="label ship">包邮</span>
         </div>
+        <PromotionTag :promotion="promotionInfo" />
 
         <h1>{{ product.name }}</h1>
         <p class="desc">{{ product.description }}</p>
@@ -119,6 +148,7 @@ watch(() => route.params.id, (id) => {
         </div>
 
         <p class="stats">销量 {{ product.sales }} · {{ product.reviewCount }} 条评价 · 评分 {{ product.rating }}</p>
+        <PromoCountdown :promotion="promotionInfo" />
 
         <div class="sku-group">
           <p>选择规格</p>
