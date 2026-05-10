@@ -37,12 +37,13 @@ const promotionInfo = computed(() => {
   const originPrice = Number(product.value.originalPrice || 0)
   const currentPrice = Number(selectedSku.value?.price || product.value.promoPrice || product.value.price || 0)
   const discountAmount = Math.max(0, originPrice - currentPrice)
+  const discountRatio = originPrice > 0 ? currentPrice / originPrice : 1
   const discountRate = originPrice > 0 && discountAmount > 0
-    ? Math.round((currentPrice / originPrice) * 10 * 10) / 10
+    ? Math.round(discountRatio * 100) / 10
     : 10
 
   return {
-    title: discountAmount > 0 ? `限时直降 ¥${discountAmount.toFixed(0)}` : '限时优惠',
+    title: discountAmount > 0 ? `限时直降 ¥${Math.round(discountAmount)}` : '限时优惠',
     subtitle: discountAmount > 0 ? `${discountRate} 折` : '活动进行中',
     endAt: promoEndsAt.value,
     discountAmount,
