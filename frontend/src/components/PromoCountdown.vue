@@ -9,7 +9,7 @@ const props = defineProps({
 })
 
 const remainingSeconds = ref(0)
-let timer = null
+const timer = ref(null)
 
 function calcRemainingSeconds(endAt) {
   if (!endAt) return 0
@@ -19,9 +19,9 @@ function calcRemainingSeconds(endAt) {
 }
 
 function stopTimer() {
-  if (timer) {
-    clearInterval(timer)
-    timer = null
+  if (timer.value) {
+    clearInterval(timer.value)
+    timer.value = null
   }
 }
 
@@ -29,7 +29,7 @@ function startTimer() {
   stopTimer()
   remainingSeconds.value = calcRemainingSeconds(props.promotion?.endAt)
   if (!remainingSeconds.value) return
-  timer = setInterval(() => {
+  timer.value = setInterval(() => {
     remainingSeconds.value = calcRemainingSeconds(props.promotion?.endAt)
     if (!remainingSeconds.value) {
       stopTimer()
@@ -53,7 +53,7 @@ onBeforeUnmount(stopTimer)
 <template>
   <div v-if="promotion" class="countdown-wrap">
     <span class="title">距活动结束</span>
-    <strong class="time">{{ countdownText }}</strong>
+    <strong class="time">{{ remainingSeconds > 0 ? countdownText : '活动已结束' }}</strong>
   </div>
 </template>
 
